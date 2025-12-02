@@ -39,7 +39,7 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		description:
 			"Following the invasion of Ukraine, Western nations imposed sanctions on Russian oil exports, removing a major supplier from global markets.",
 		mediaSource:
-			"https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=640&h=360&fit=crop",
+			"https://images.unsplash.com/photo-1513828583688-c52646db42da?w=640&h=360&fit=crop",
 		mediaType: "image",
 		correctCurve: "supply",
 		correctShift: "left",
