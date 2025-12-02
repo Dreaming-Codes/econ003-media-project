@@ -10,7 +10,7 @@ import {
 	XCircle,
 } from "lucide-react";
 import { AnimatePresence, motion, type PanInfo } from "motion/react";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";

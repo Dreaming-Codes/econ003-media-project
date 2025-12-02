@@ -1,13 +1,13 @@
-import aiChatgptImg from "@/assets/scenarios/ai-chatgpt.jpg";
-import concertCrowdImg from "@/assets/scenarios/concert-crowd.jpg";
-import containerShipImg from "@/assets/scenarios/container-ship.jpg";
-import eggsImg from "@/assets/scenarios/eggs.jpg";
-import evChargingImg from "@/assets/scenarios/ev-charging.jpg";
-import graduationImg from "@/assets/scenarios/graduation.jpg";
-import homeOfficeImg from "@/assets/scenarios/home-office.jpg";
-import nvidiaGpuImg from "@/assets/scenarios/nvidia-gpu.jpg";
-import oilSanctionsImg from "@/assets/scenarios/oil-sanctions.jpg";
-import semiconductorShortageImg from "@/assets/scenarios/semiconductor-shortage.jpg";
+import aiChatgptImg from "@/assets/scenarios/ai-chatgpt.webp";
+import concertCrowdImg from "@/assets/scenarios/concert-crowd.webp";
+import containerShipImg from "@/assets/scenarios/container-ship.webp";
+import eggsImg from "@/assets/scenarios/eggs.webp";
+import evChargingImg from "@/assets/scenarios/ev-charging.webp";
+import graduationImg from "@/assets/scenarios/graduation.webp";
+import homeOfficeImg from "@/assets/scenarios/home-office.webp";
+import nvidiaGpuImg from "@/assets/scenarios/nvidia-gpu.webp";
+import oilSanctionsImg from "@/assets/scenarios/oil-sanctions.webp";
+import semiconductorShortageImg from "@/assets/scenarios/semiconductor-shortage.webp";
 
 export type CurveType = "supply" | "demand";
 export type ShiftDirection = "left" | "right";
