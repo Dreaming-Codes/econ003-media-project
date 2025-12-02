@@ -1,17 +1,19 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { motion } from "motion/react";
 import {
 	BookOpen,
-	GraduationCap,
-	TrendingUp,
-	Gamepad2,
-	Library,
 	ChevronDown,
+	Gamepad2,
+	GraduationCap,
+	Library,
 	Pointer,
+	TrendingUp,
 } from "lucide-react";
-
-import MarketShifterGame from "../components/market-shifter-game";
+import { motion } from "motion/react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ConceptLibrary from "../components/concept-library";
+import MarketShifterGame from "../components/market-shifter-game";
 
 export const Route = createFileRoute("/")({ component: MicroeconomicsHub });
 
@@ -48,18 +50,22 @@ function MicroeconomicsHub() {
 					{/* UCR Badge */}
 					<motion.div
 						animate={{ opacity: 1, scale: 1 }}
-						className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-4"
 						initial={{ opacity: 0, scale: 0.9 }}
-						style={{
-							backgroundColor: `${UCR_BLUE}20`,
-							border: `1px solid ${UCR_BLUE}40`,
-						}}
 						transition={{ delay: 0.2 }}
 					>
-						<GraduationCap size={16} style={{ color: UCR_GOLD }} />
-						<span className="text-xs font-medium text-white/90">
-							UCR Economics Media Project
-						</span>
+						<Badge
+							className="inline-flex items-center gap-2 px-3 py-1.5 mb-4"
+							style={{
+								backgroundColor: `${UCR_BLUE}20`,
+								border: `1px solid ${UCR_BLUE}40`,
+							}}
+							variant="outline"
+						>
+							<GraduationCap size={16} style={{ color: UCR_GOLD }} />
+							<span className="text-xs font-medium text-white/90">
+								UCR Economics Media Project
+							</span>
+						</Badge>
 					</motion.div>
 
 					{/* Title */}
@@ -90,26 +96,26 @@ function MicroeconomicsHub() {
 
 					{/* CTA Buttons */}
 					<div className="flex flex-col sm:flex-row gap-3 justify-center">
-						<motion.button
-							className="px-6 py-2.5 rounded-xl font-semibold text-white shadow-lg transition-all hover:shadow-xl flex items-center justify-center gap-2"
-							onClick={() => scrollToSection("market-shifter")}
-							style={{ backgroundColor: UCR_BLUE }}
-							whileHover={{ scale: 1.02 }}
-							whileTap={{ scale: 0.98 }}
-						>
-							<Gamepad2 size={18} />
-							Play Market Shifter
-						</motion.button>
-						<motion.button
-							className="px-6 py-2.5 rounded-xl font-semibold text-gray-900 shadow-lg transition-all hover:shadow-xl flex items-center justify-center gap-2"
-							onClick={() => scrollToSection("concept-library")}
-							style={{ backgroundColor: UCR_GOLD }}
-							whileHover={{ scale: 1.02 }}
-							whileTap={{ scale: 0.98 }}
-						>
-							<Library size={18} />
-							Concept Library
-						</motion.button>
+						<motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+							<Button
+								className="px-6 py-2.5 h-auto rounded-xl font-semibold text-white shadow-lg hover:shadow-xl"
+								onClick={() => scrollToSection("market-shifter")}
+								style={{ backgroundColor: UCR_BLUE }}
+							>
+								<Gamepad2 size={18} />
+								Play Market Shifter
+							</Button>
+						</motion.div>
+						<motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+							<Button
+								className="px-6 py-2.5 h-auto rounded-xl font-semibold text-gray-900 shadow-lg hover:shadow-xl"
+								onClick={() => scrollToSection("concept-library")}
+								style={{ backgroundColor: UCR_GOLD }}
+							>
+								<Library size={18} />
+								Concept Library
+							</Button>
+						</motion.div>
 					</div>
 				</motion.div>
 
@@ -131,15 +137,15 @@ function MicroeconomicsHub() {
 			>
 				{/* Section Header */}
 				<div className="text-center py-6 px-4">
-					<div
-						className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-3"
+					<Badge
+						className="inline-flex items-center gap-2 px-3 py-1.5 mb-3 border-transparent"
 						style={{ backgroundColor: `${UCR_GOLD}20` }}
 					>
 						<Gamepad2 size={16} style={{ color: UCR_GOLD }} />
 						<span className="text-xs font-medium text-white/90">
 							Interactive Game
 						</span>
-					</div>
+					</Badge>
 					<h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
 						The Market Shifter
 					</h2>
@@ -190,15 +196,15 @@ function MicroeconomicsHub() {
 						viewport={{ once: true }}
 						whileInView={{ opacity: 1, y: 0 }}
 					>
-						<div
-							className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-3"
+						<Badge
+							className="inline-flex items-center gap-2 px-3 py-1.5 mb-3 border-transparent"
 							style={{ backgroundColor: `${UCR_BLUE}20` }}
 						>
 							<Library size={16} style={{ color: UCR_BLUE }} />
 							<span className="text-xs font-medium text-white/90">
 								Study Resources
 							</span>
-						</div>
+						</Badge>
 						<h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
 							Concept Library
 						</h2>
@@ -238,20 +244,27 @@ type FeatureCardProps = {
 function FeatureCard({ icon, iconBg, title, description }: FeatureCardProps) {
 	return (
 		<motion.div
-			className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 rounded-xl p-4 hover:border-slate-600 transition-all"
 			initial={{ opacity: 0, y: 20 }}
 			transition={{ duration: 0.4 }}
 			viewport={{ once: true }}
 			whileInView={{ opacity: 1, y: 0 }}
 		>
-			<div
-				className="w-10 h-10 rounded-lg flex items-center justify-center mb-3"
-				style={{ backgroundColor: iconBg }}
-			>
-				{icon}
-			</div>
-			<h3 className="text-base font-semibold text-white mb-1">{title}</h3>
-			<p className="text-gray-400 text-xs">{description}</p>
+			<Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 hover:border-slate-600 transition-all py-4 gap-3">
+				<CardHeader className="pb-0 pt-0">
+					<div
+						className="w-10 h-10 rounded-lg flex items-center justify-center"
+						style={{ backgroundColor: iconBg }}
+					>
+						{icon}
+					</div>
+					<CardTitle className="text-base font-semibold text-white">
+						{title}
+					</CardTitle>
+				</CardHeader>
+				<CardContent className="pb-0">
+					<p className="text-gray-400 text-xs">{description}</p>
+				</CardContent>
+			</Card>
 		</motion.div>
 	);
 }

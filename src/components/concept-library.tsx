@@ -1,13 +1,17 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "motion/react";
 import {
-	ChevronDown,
-	Scale,
-	Percent,
-	Target,
 	BookOpen,
+	ChevronDown,
 	Lightbulb,
+	Percent,
+	Scale,
+	Target,
 } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
+import { useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 const UCR_BLUE = "#2D6CC0";
 const UCR_GOLD = "#F1AB00";
@@ -126,119 +130,122 @@ function ConceptAccordion({
 	onToggle,
 }: ConceptAccordionProps) {
 	return (
-		<motion.div
-			className="bg-white rounded-xl shadow-lg overflow-hidden"
-			layout
-		>
-			{/* Header */}
-			<button
-				className="w-full p-4 md:p-6 flex items-center gap-4 text-left hover:bg-gray-50 transition-colors"
-				onClick={onToggle}
-				type="button"
-			>
-				<div
-					className="p-3 rounded-xl flex-shrink-0"
-					style={{ backgroundColor: UCR_BLUE }}
+		<motion.div layout>
+			<Card className="bg-white rounded-xl shadow-lg overflow-hidden border-0 py-0 gap-0">
+				{/* Header */}
+				<Button
+					className="w-full p-4 md:p-6 h-auto flex items-center gap-4 text-left hover:bg-gray-50 justify-start rounded-none"
+					onClick={onToggle}
+					variant="ghost"
 				>
-					{concept.icon}
-				</div>
-				<div className="flex-1">
-					<h3 className="text-lg md:text-xl font-bold text-gray-900">
-						{concept.title}
-					</h3>
-					<p className="text-sm text-gray-500 mt-1 line-clamp-1">
-						{concept.definition}
-					</p>
-				</div>
-				<motion.div
-					animate={{ rotate: isOpen ? 180 : 0 }}
-					className="flex-shrink-0"
-					transition={{ duration: 0.2 }}
-				>
-					<ChevronDown className="text-gray-400" size={24} />
-				</motion.div>
-			</button>
-
-			{/* Content */}
-			<AnimatePresence initial={false}>
-				{isOpen && (
-					<motion.div
-						animate={{ height: "auto", opacity: 1 }}
-						exit={{ height: 0, opacity: 0 }}
-						initial={{ height: 0, opacity: 0 }}
-						transition={{ duration: 0.3, ease: "easeInOut" }}
+					<div
+						className="p-3 rounded-xl flex-shrink-0"
+						style={{ backgroundColor: UCR_BLUE }}
 					>
-						<div className="px-4 md:px-6 pb-6 space-y-6">
-							{/* Divider */}
-							<div className="h-px bg-gray-200" />
-
-							{/* Definition */}
-							<div>
-								<h4 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
-									<BookOpen size={18} style={{ color: UCR_BLUE }} />
-									Definition
-								</h4>
-								<p className="text-gray-700 leading-relaxed">
-									{concept.definition}
-								</p>
-							</div>
-
-							{/* Key Points */}
-							<div>
-								<h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
-									<Lightbulb size={18} style={{ color: UCR_GOLD }} />
-									Key Points
-								</h4>
-								<ul className="space-y-2">
-									{concept.keyPoints.map((point, index) => (
-										<motion.li
-											animate={{ opacity: 1, x: 0 }}
-											className="flex items-start gap-3"
-											initial={{ opacity: 0, x: -10 }}
-											key={`${concept.id}-point-${index}`}
-											transition={{ delay: index * 0.1 }}
-										>
-											<span
-												className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0 mt-0.5"
-												style={{ backgroundColor: UCR_BLUE }}
-											>
-												{index + 1}
-											</span>
-											<span className="text-gray-700">{point}</span>
-										</motion.li>
-									))}
-								</ul>
-							</div>
-
-							{/* Example */}
-							<div
-								className="p-4 rounded-xl"
-								style={{ backgroundColor: "#FEF9E7" }}
-							>
-								<h4
-									className="font-semibold mb-2 flex items-center gap-2"
-									style={{ color: UCR_GOLD }}
-								>
-									Real-World Example
-								</h4>
-								<p className="text-gray-800 mb-3 font-medium">
-									{concept.example.scenario}
-								</p>
-								<p className="text-gray-700 text-sm">
-									<span className="font-semibold">Analysis: </span>
-									{concept.example.analysis}
-								</p>
-							</div>
-
-							{/* Textbook Reference */}
-							<div className="flex items-center gap-2 text-sm text-gray-500 pt-2 border-t border-gray-100">
-								<BookOpen size={16} />
-								<span>{concept.textbookReference}</span>
-							</div>
-						</div>
+						{concept.icon}
+					</div>
+					<div className="flex-1">
+						<h3 className="text-lg md:text-xl font-bold text-gray-900">
+							{concept.title}
+						</h3>
+						<p className="text-sm text-gray-500 mt-1 line-clamp-1 font-normal">
+							{concept.definition}
+						</p>
+					</div>
+					<motion.div
+						animate={{ rotate: isOpen ? 180 : 0 }}
+						className="flex-shrink-0"
+						transition={{ duration: 0.2 }}
+					>
+						<ChevronDown className="text-gray-400" size={24} />
 					</motion.div>
-				)}
-			</AnimatePresence>
+				</Button>
+
+				{/* Content */}
+				<AnimatePresence initial={false}>
+					{isOpen && (
+						<motion.div
+							animate={{ height: "auto", opacity: 1 }}
+							exit={{ height: 0, opacity: 0 }}
+							initial={{ height: 0, opacity: 0 }}
+							transition={{ duration: 0.3, ease: "easeInOut" }}
+						>
+							<CardContent className="px-4 md:px-6 pb-6 space-y-6">
+								{/* Divider */}
+								<Separator className="bg-gray-200" />
+
+								{/* Definition */}
+								<div>
+									<h4 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
+										<BookOpen size={18} style={{ color: UCR_BLUE }} />
+										Definition
+									</h4>
+									<p className="text-gray-700 leading-relaxed">
+										{concept.definition}
+									</p>
+								</div>
+
+								{/* Key Points */}
+								<div>
+									<h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+										<Lightbulb size={18} style={{ color: UCR_GOLD }} />
+										Key Points
+									</h4>
+									<ul className="space-y-2">
+										{concept.keyPoints.map((point, index) => (
+											<motion.li
+												animate={{ opacity: 1, x: 0 }}
+												className="flex items-start gap-3"
+												initial={{ opacity: 0, x: -10 }}
+												key={`${concept.id}-point-${index}`}
+												transition={{ delay: index * 0.1 }}
+											>
+												<span
+													className="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0 mt-0.5"
+													style={{ backgroundColor: UCR_BLUE }}
+												>
+													{index + 1}
+												</span>
+												<span className="text-gray-700">{point}</span>
+											</motion.li>
+										))}
+									</ul>
+								</div>
+
+								{/* Example */}
+								<Card
+									className="p-4 rounded-xl border-0 shadow-none"
+									style={{ backgroundColor: "#FEF9E7" }}
+								>
+									<CardContent className="p-0">
+										<h4
+											className="font-semibold mb-2 flex items-center gap-2"
+											style={{ color: UCR_GOLD }}
+										>
+											Real-World Example
+										</h4>
+										<p className="text-gray-800 mb-3 font-medium">
+											{concept.example.scenario}
+										</p>
+										<p className="text-gray-700 text-sm">
+											<span className="font-semibold">Analysis: </span>
+											{concept.example.analysis}
+										</p>
+									</CardContent>
+								</Card>
+
+								{/* Textbook Reference */}
+								<div className="flex items-center gap-2 text-sm text-gray-500 pt-2">
+									<Separator className="flex-1 bg-gray-100" />
+									<BookOpen size={16} />
+									<span>{concept.textbookReference}</span>
+									<Separator className="flex-1 bg-gray-100" />
+								</div>
+							</CardContent>
+						</motion.div>
+					)}
+				</AnimatePresence>
+			</Card>
 		</motion.div>
 	);
 }
