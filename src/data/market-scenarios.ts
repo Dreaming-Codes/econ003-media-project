@@ -23,7 +23,7 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		description:
 			"A worldwide chip shortage caused by pandemic disruptions, factory fires, and surging demand for electronics crippled auto manufacturers and tech companies.",
 		mediaSource:
-			"https://via.placeholder.com/640x360?text=Semiconductor+Shortage+Video",
+			"https://images.unsplash.com/photo-1518770660439-4636190af475?w=640&h=360&fit=crop",
 		mediaType: "image",
 		correctCurve: "supply",
 		correctShift: "left",
@@ -38,7 +38,8 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		year: "2022",
 		description:
 			"Following the invasion of Ukraine, Western nations imposed sanctions on Russian oil exports, removing a major supplier from global markets.",
-		mediaSource: "https://via.placeholder.com/640x360?text=Oil+Sanctions+News",
+		mediaSource:
+			"https://images.unsplash.com/photo-1586953208448-b95a79798f07?w=640&h=360&fit=crop",
 		mediaType: "image",
 		correctCurve: "supply",
 		correctShift: "left",
@@ -53,7 +54,8 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		year: "2023",
 		description:
 			"The Eras Tour became the highest-grossing concert tour of all time, with unprecedented demand crashing Ticketmaster and driving hotel prices up 150% in tour cities.",
-		mediaSource: "https://via.placeholder.com/640x360?text=Eras+Tour+Concert",
+		mediaSource:
+			"https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=640&h=360&fit=crop",
 		mediaType: "image",
 		correctCurve: "demand",
 		correctShift: "right",
@@ -68,7 +70,8 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		year: "2022",
 		description:
 			"The IRA introduced up to $7,500 in federal tax credits for qualifying electric vehicle purchases, effectively lowering the price for consumers.",
-		mediaSource: "https://via.placeholder.com/640x360?text=EV+Tax+Credit+News",
+		mediaSource:
+			"https://images.unsplash.com/photo-1593941707882-a5bba14938c7?w=640&h=360&fit=crop",
 		mediaType: "image",
 		correctCurve: "demand",
 		correctShift: "right",
@@ -83,7 +86,8 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		year: "2020",
 		description:
 			"COVID-19 lockdowns forced millions to work from home, dramatically increasing demand for home office equipment, webcams, and ergonomic furniture.",
-		mediaSource: "https://via.placeholder.com/640x360?text=Remote+Work+Setup",
+		mediaSource:
+			"https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?w=640&h=360&fit=crop",
 		mediaType: "image",
 		correctCurve: "demand",
 		correctShift: "right",
@@ -98,7 +102,8 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		year: "2023",
 		description:
 			"Bird flu outbreaks led to the culling of over 58 million birds in the US, causing egg prices to more than double at grocery stores.",
-		mediaSource: "https://via.placeholder.com/640x360?text=Egg+Prices+Soaring",
+		mediaSource:
+			"https://images.unsplash.com/photo-1582722872445-44dc5f7e3c8f?w=640&h=360&fit=crop",
 		mediaType: "image",
 		correctCurve: "supply",
 		correctShift: "left",
@@ -114,7 +119,7 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		description:
 			"The release of ChatGPT sparked an AI gold rush, with companies racing to acquire AI talent and GPU chips, driving up prices for both.",
 		mediaSource:
-			"https://via.placeholder.com/640x360?text=ChatGPT+AI+Revolution",
+			"https://images.unsplash.com/photo-1677442136019-21780ecad995?w=640&h=360&fit=crop",
 		mediaType: "image",
 		correctCurve: "demand",
 		correctShift: "right",
@@ -129,7 +134,8 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		year: "2021",
 		description:
 			"The Ever Given container ship blocked the Suez Canal for 6 days, disrupting global trade worth an estimated $9.6 billion per day.",
-		mediaSource: "https://via.placeholder.com/640x360?text=Ever+Given+Stuck",
+		mediaSource:
+			"https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=640&h=360&fit=crop",
 		mediaType: "image",
 		correctCurve: "supply",
 		correctShift: "left",
@@ -144,7 +150,8 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		year: "2024",
 		description:
 			"NVIDIA H100 GPUs became so scarce that companies waited months for delivery, with some paying 3x list price on secondary markets.",
-		mediaSource: "https://via.placeholder.com/640x360?text=NVIDIA+GPU+Shortage",
+		mediaSource:
+			"https://images.unsplash.com/photo-1591488320449-011701bb6704?w=640&h=360&fit=crop",
 		mediaType: "image",
 		correctCurve: "demand",
 		correctShift: "right",
@@ -159,7 +166,8 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		year: "2020",
 		description:
 			"The federal government paused student loan payments during COVID, freeing up billions in monthly disposable income for borrowers.",
-		mediaSource: "https://via.placeholder.com/640x360?text=Student+Loan+Pause",
+		mediaSource:
+			"https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=640&h=360&fit=crop",
 		mediaType: "image",
 		correctCurve: "demand",
 		correctShift: "right",
