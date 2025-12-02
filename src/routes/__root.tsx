@@ -17,7 +17,7 @@ export const Route = createRootRoute({
 				content: "width=device-width, initial-scale=1",
 			},
 			{
-				name: "darkreader-lock"
+				name: "darkreader-lock",
 			},
 			{
 				title: "Microeconomics Review Hub | UCR",
