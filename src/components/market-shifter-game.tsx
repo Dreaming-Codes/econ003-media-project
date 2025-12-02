@@ -10,7 +10,7 @@ import {
 	XCircle,
 } from "lucide-react";
 import { AnimatePresence, motion, type PanInfo } from "motion/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -34,6 +34,23 @@ const UCR_GOLD = "#F1AB00";
 
 const SWIPE_THRESHOLD = 100;
 
+// Global image cache to store preloaded images
+const imageCache = new Map<string, string>();
+
+// Preload an image and cache its blob URL
+async function preloadImage(src: string): Promise<string> {
+	const cached = imageCache.get(src);
+	if (cached) {
+		return cached;
+	}
+
+	const response = await fetch(src);
+	const blob = await response.blob();
+	const blobUrl = URL.createObjectURL(blob);
+	imageCache.set(src, blobUrl);
+	return blobUrl;
+}
+
 export default function MarketShifterGame() {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [phase, setPhase] = useState<GamePhase>("choose-curve");
@@ -44,8 +61,28 @@ export default function MarketShifterGame() {
 		null,
 	);
 	const [exitX, setExitX] = useState(0);
+	const [currentImageUrl, setCurrentImageUrl] = useState<string>("");
+	const preloadedRef = useRef<Set<string>>(new Set());
 
 	const currentScenario = MARKET_SCENARIOS[currentIndex];
+
+	// Preload current image on mount and next image when currentIndex changes
+	useEffect(() => {
+		const currentSrc = MARKET_SCENARIOS[currentIndex].mediaSource;
+		const nextIndex = (currentIndex + 1) % MARKET_SCENARIOS.length;
+		const nextSrc = MARKET_SCENARIOS[nextIndex].mediaSource;
+
+		// Load current image and set it
+		preloadImage(currentSrc).then((blobUrl) => {
+			setCurrentImageUrl(blobUrl);
+		});
+
+		// Preload next image in background
+		if (!preloadedRef.current.has(nextSrc)) {
+			preloadedRef.current.add(nextSrc);
+			preloadImage(nextSrc);
+		}
+	}, [currentIndex]);
 
 	const isCorrect =
 		userAnswer &&
@@ -232,11 +269,13 @@ export default function MarketShifterGame() {
 						>
 							{/* Media Section - Compact */}
 							<div className="relative h-36 sm:h-44 bg-gray-900">
-								<img
-									alt={currentScenario.headline}
-									className="w-full h-full object-cover"
-									src={currentScenario.mediaSource}
-								/>
+								{currentImageUrl && (
+									<img
+										alt={currentScenario.headline}
+										className="w-full h-full object-cover"
+										src={currentImageUrl}
+									/>
+								)}
 								<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 								<div className="absolute bottom-0 left-0 right-0 p-3">
 									<Badge
