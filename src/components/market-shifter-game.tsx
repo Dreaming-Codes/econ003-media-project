@@ -34,10 +34,8 @@ const UCR_GOLD = "#F1AB00";
 
 const SWIPE_THRESHOLD = 100;
 
-// Image cache to store preloaded images (module-scoped for cleanup)
 const imageCache = new Map<string, string>();
 
-// Preload an image and cache its blob URL
 async function preloadImage(src: string): Promise<string> {
 	const cached = imageCache.get(src);
 	if (cached) {
@@ -51,7 +49,6 @@ async function preloadImage(src: string): Promise<string> {
 	return blobUrl;
 }
 
-// Revoke all blob URLs and clear cache
 function clearImageCache(): void {
 	for (const blobUrl of imageCache.values()) {
 		URL.revokeObjectURL(blobUrl);
@@ -84,13 +81,11 @@ export default function MarketShifterGame() {
 
 	const currentScenario = scenarios[currentIndex];
 
-	// Shuffle scenarios on initial mount and cleanup on unmount
 	useEffect(() => {
 		setScenarios(shuffleArray(MARKET_SCENARIOS));
 		return () => clearImageCache();
 	}, []);
 
-	// Preload current and next image
 	useEffect(() => {
 		const currentSrc = scenarios[currentIndex].mediaSource;
 		const nextIndex = (currentIndex + 1) % scenarios.length;
@@ -213,7 +208,6 @@ export default function MarketShifterGame() {
 
 	return (
 		<div className="w-full flex flex-col p-4 lg:px-8 lg:py-6 max-w-6xl mx-auto">
-			{/* Score Bar - Full width */}
 			<div className="flex items-center justify-between mb-4 lg:mb-6 px-1 max-w-md mx-auto w-full lg:max-w-none">
 				<Badge className="px-3 py-1.5 bg-white/10 border-transparent text-white hover:bg-white/10">
 					<span className="text-white/70 text-sm">Score:</span>
@@ -237,13 +231,9 @@ export default function MarketShifterGame() {
 				</div>
 			</div>
 
-			{/* Game Content - Card and Graph side by side on desktop */}
 			<div className="flex flex-col lg:flex-row lg:items-start lg:justify-center gap-6 lg:gap-8">
-				{/* Left side - Card Stack */}
 				<div className="flex flex-col min-h-0 w-full lg:w-[420px]">
-					{/* Card Container */}
 					<div className="relative flex items-center justify-center">
-						{/* Swipe Hints - Hidden on desktop, shown on mobile */}
 						{hints && phase !== "result" && (
 							<>
 								<Badge
@@ -261,7 +251,6 @@ export default function MarketShifterGame() {
 							</>
 						)}
 
-						{/* Card */}
 						<AnimatePresence mode="wait">
 							<motion.div
 								key={`${currentScenario.id}-${phase}`}
@@ -286,7 +275,6 @@ export default function MarketShifterGame() {
 								transition={{ type: "spring", stiffness: 300, damping: 25 }}
 								whileDrag={{ scale: 1.02 }}
 							>
-								{/* Media Section */}
 								<div className="relative h-36 sm:h-40 bg-gray-900">
 									{currentImageUrl && (
 										<img
@@ -309,13 +297,11 @@ export default function MarketShifterGame() {
 									</div>
 								</div>
 
-								{/* Content */}
 								<div className="p-4 lg:p-5">
 									<p className="text-gray-600 text-sm mb-4 leading-relaxed">
 										{currentScenario.description}
 									</p>
 
-									{/* Phase-specific UI */}
 									{phase === "choose-curve" && (
 										<div className="space-y-3">
 											<p className="text-center font-semibold text-gray-800">
@@ -418,7 +404,6 @@ export default function MarketShifterGame() {
 					</div>
 				</div>
 
-				{/* Right side - Graph */}
 				<div className="w-full lg:w-[420px] flex-shrink-0">
 					<Card className="bg-white rounded-2xl shadow-xl p-4 border-0">
 						<CardContent className="p-0">
@@ -474,7 +459,6 @@ function ResultContent({
 }: ResultContentProps) {
 	return (
 		<div className="space-y-3">
-			{/* Result Badge */}
 			<Alert
 				className={`flex items-center justify-center gap-2 p-3 rounded-xl border-0 ${
 					isCorrect ? "bg-green-100" : "bg-red-100"
@@ -492,7 +476,6 @@ function ResultContent({
 				</AlertTitle>
 			</Alert>
 
-			{/* Answer Summary */}
 			{!isCorrect && userAnswer && (
 				<p className="text-xs text-center text-gray-500">
 					You said: {userAnswer.curve} shifts {userAnswer.direction}
@@ -518,7 +501,6 @@ function ResultContent({
 				</span>
 			</div>
 
-			{/* Concept */}
 			<Card className="p-3 rounded-xl bg-blue-50 border-l-4 border-blue-500 border-t-0 border-r-0 border-b-0 shadow-none">
 				<CardContent className="p-0">
 					<div className="flex items-start gap-2">
@@ -542,7 +524,6 @@ function ResultContent({
 				</CardContent>
 			</Card>
 
-			{/* Next Button */}
 			<Button
 				className="w-full py-3 h-auto rounded-xl font-semibold text-white hover:opacity-90"
 				onClick={onNext}

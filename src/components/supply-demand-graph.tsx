@@ -26,7 +26,6 @@ export default function SupplyDemandGraph({
 
 	const shiftOffset = getShiftOffset();
 
-	// Determine which curve to highlight during preview
 	const highlightSupply = previewCurve === "supply" || shiftCurve === "supply";
 	const highlightDemand = previewCurve === "demand" || shiftCurve === "demand";
 

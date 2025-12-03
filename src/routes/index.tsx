@@ -28,9 +28,7 @@ function MicroeconomicsHub() {
 
 	return (
 		<div className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
-			{/* Hero Section - Full viewport height */}
 			<section className="relative min-h-screen flex flex-col items-center justify-center px-4 md:px-6 text-center overflow-hidden">
-				{/* Background Decorations */}
 				<div className="absolute inset-0 overflow-hidden pointer-events-none">
 					<div
 						className="absolute top-1/4 -left-20 w-96 h-96 rounded-full blur-3xl opacity-30"
@@ -52,7 +50,6 @@ function MicroeconomicsHub() {
 					initial={{ opacity: 0, y: 20 }}
 					transition={{ duration: 0.6 }}
 				>
-					{/* UCR Badge */}
 					<motion.div
 						animate={{ opacity: 1, scale: 1 }}
 						initial={{ opacity: 0, scale: 0.9 }}
@@ -73,7 +70,6 @@ function MicroeconomicsHub() {
 						</Badge>
 					</motion.div>
 
-					{/* Title */}
 					<h1 className="text-3xl md:text-5xl lg:text-6xl font-black text-white mb-3 tracking-tight">
 						<span className="block">Microeconomics</span>
 						<span
@@ -86,12 +82,10 @@ function MicroeconomicsHub() {
 						</span>
 					</h1>
 
-					{/* Subtitle */}
 					<p className="text-base md:text-lg text-gray-300 mb-3 max-w-xl mx-auto">
 						Swipe your way through Supply & Demand scenarios
 					</p>
 
-					{/* Textbook Reference */}
 					<div className="flex items-center justify-center gap-2 text-gray-400 mb-6">
 						<BookOpen size={14} />
 						<span className="text-xs">
@@ -99,7 +93,6 @@ function MicroeconomicsHub() {
 						</span>
 					</div>
 
-					{/* CTA Buttons */}
 					<div className="flex flex-col sm:flex-row gap-3 justify-center">
 						<motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
 							<Button
@@ -123,7 +116,6 @@ function MicroeconomicsHub() {
 						</motion.div>
 					</div>
 
-					{/* Source Code Button */}
 					<div className="flex justify-center mt-3">
 						<motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
 							<Button
@@ -143,7 +135,6 @@ function MicroeconomicsHub() {
 					</div>
 				</motion.div>
 
-				{/* Scroll Indicator */}
 				<motion.div
 					animate={{ y: [0, 8, 0] }}
 					className="absolute bottom-8 left-1/2 -translate-x-1/2"
@@ -153,10 +144,8 @@ function MicroeconomicsHub() {
 				</motion.div>
 			</section>
 
-			{/* Market Shifter Game Section */}
 			{/* biome-ignore lint/correctness/useUniqueElementIds: Static ID for navigation anchor in single-page app */}
 			<section className="py-6 lg:py-10" id="market-shifter">
-				{/* Section Header */}
 				<div className="text-center pb-4 px-4">
 					<Badge
 						className="inline-flex items-center gap-2 px-3 py-1.5 mb-3 border-transparent"
@@ -176,11 +165,9 @@ function MicroeconomicsHub() {
 					</p>
 				</div>
 
-				{/* Game Container */}
 				<MarketShifterGame />
 			</section>
 
-			{/* Features Overview - Compact */}
 			<section className="py-10 px-4 md:px-6">
 				<div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
 					<FeatureCard
@@ -204,7 +191,6 @@ function MicroeconomicsHub() {
 				</div>
 			</section>
 
-			{/* Concept Library Section */}
 			{/* biome-ignore lint/correctness/useUniqueElementIds: Static ID for navigation anchor in single-page app */}
 			<section
 				className="min-h-screen py-12 md:py-16 px-4 md:px-6"
@@ -240,7 +226,6 @@ function MicroeconomicsHub() {
 				</div>
 			</section>
 
-			{/* Footer */}
 			<footer className="py-6 px-4 md:px-6 border-t border-white/10">
 				<div className="max-w-5xl mx-auto text-center">
 					<p className="text-gray-500 text-sm">

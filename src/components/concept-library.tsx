@@ -134,7 +134,6 @@ function ConceptAccordion({
 	return (
 		<motion.div layout>
 			<Card className="bg-white rounded-xl shadow-lg overflow-hidden border-0 py-0 gap-0 hover:shadow-xl transition-shadow cursor-pointer">
-				{/* Header */}
 				<Button
 					className="w-full p-4 md:p-6 h-auto flex items-center gap-4 text-left hover:bg-gray-50 justify-start rounded-none group"
 					onClick={onToggle}
@@ -166,7 +165,6 @@ function ConceptAccordion({
 					</motion.div>
 				</Button>
 
-				{/* Content */}
 				<AnimatePresence initial={false}>
 					{isOpen && (
 						<motion.div
@@ -176,10 +174,8 @@ function ConceptAccordion({
 							transition={{ duration: 0.3, ease: "easeInOut" }}
 						>
 							<CardContent className="px-4 md:px-6 pb-6 space-y-6">
-								{/* Divider */}
 								<Separator className="bg-gray-200" />
 
-								{/* Definition */}
 								<div>
 									<h4 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
 										<BookOpen size={18} style={{ color: UCR_BLUE }} />
@@ -190,7 +186,6 @@ function ConceptAccordion({
 									</p>
 								</div>
 
-								{/* Key Points */}
 								<div>
 									<h4 className="font-semibold text-gray-800 mb-3 flex items-center gap-2">
 										<Lightbulb size={18} style={{ color: UCR_GOLD }} />
@@ -217,7 +212,6 @@ function ConceptAccordion({
 									</ul>
 								</div>
 
-								{/* Example */}
 								<Card
 									className="p-4 rounded-xl border-0 shadow-none"
 									style={{ backgroundColor: "#FEF9E7" }}
@@ -239,7 +233,6 @@ function ConceptAccordion({
 									</CardContent>
 								</Card>
 
-								{/* Textbook Reference */}
 								<div className="flex items-center gap-2 text-sm text-gray-500 pt-2">
 									<Separator className="flex-1 bg-gray-100" />
 									<BookOpen size={16} />

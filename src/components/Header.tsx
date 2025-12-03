@@ -29,7 +29,6 @@ export default function Header() {
 						</Link>
 					</div>
 
-					{/* Desktop nav */}
 					<div className="hidden items-center gap-2 sm:flex">
 						<Button
 							className="text-white/80 hover:bg-white/10 hover:text-white"
@@ -47,7 +46,6 @@ export default function Header() {
 						</Button>
 					</div>
 
-					{/* Mobile toggle */}
 					<Button
 						className="text-white/80 hover:bg-white/10 hover:text-white sm:hidden"
 						onClick={() => setIsOpen(!isOpen)}
@@ -61,7 +59,6 @@ export default function Header() {
 					</Button>
 				</div>
 
-				{/* Mobile nav */}
 				<div
 					className={`grid transition-all duration-200 sm:hidden ${
 						isOpen
