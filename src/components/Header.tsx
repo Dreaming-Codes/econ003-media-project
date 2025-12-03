@@ -1,136 +1,94 @@
 import { Link } from "@tanstack/react-router";
-import { Gamepad2, GraduationCap, Home, Library, Menu } from "lucide-react";
+import { ChevronDown, GraduationCap } from "lucide-react";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-	Sheet,
-	SheetClose,
-	SheetContent,
-	SheetDescription,
-	SheetFooter,
-	SheetHeader,
-	SheetTitle,
-	SheetTrigger,
-} from "@/components/ui/sheet";
 
-const UCR_BLUE = "#2D6CC0";
 const UCR_GOLD = "#F1AB00";
 
 export default function Header() {
-	const scrollToSection = (id: string, close?: () => void) => {
-		close?.();
-		setTimeout(() => {
-			document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
-		}, 300);
+	const [isOpen, setIsOpen] = useState(false);
+
+	const scrollToSection = (id: string) => {
+		setIsOpen(false);
+		document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 	};
 
 	return (
-		<header
-			className="p-4 flex items-center shadow-lg sticky top-0 z-40"
-			style={{ backgroundColor: UCR_BLUE }}
-		>
-			<Sheet>
-				<SheetTrigger asChild>
+		<div className="fixed top-0 left-0 right-0 z-40 flex justify-center px-4 pt-4">
+			<header className="flex w-full max-w-6xl flex-col rounded-2xl border border-white/20 bg-white/10 shadow-xl backdrop-blur-xl">
+				<div className="flex items-center justify-between px-4 py-3 md:px-8">
+					<div className="flex items-center gap-2 md:gap-3">
+						<GraduationCap
+							className="shrink-0"
+							size={24}
+							style={{ color: UCR_GOLD }}
+						/>
+						<Link className="text-base font-bold text-white md:text-xl" to="/">
+							Microeconomics Hub
+						</Link>
+					</div>
+
+					{/* Desktop nav */}
+					<div className="hidden items-center gap-2 sm:flex">
+						<Button
+							className="text-white/80 hover:bg-white/10 hover:text-white"
+							onClick={() => scrollToSection("market-shifter")}
+							variant="ghost"
+						>
+							Market Shifter
+						</Button>
+						<Button
+							className="text-white/80 hover:bg-white/10 hover:text-white"
+							onClick={() => scrollToSection("concept-library")}
+							variant="ghost"
+						>
+							Concept Library
+						</Button>
+					</div>
+
+					{/* Mobile toggle */}
 					<Button
-						aria-label="Open menu"
-						className="hover:bg-white/10 text-white"
+						className="text-white/80 hover:bg-white/10 hover:text-white sm:hidden"
+						onClick={() => setIsOpen(!isOpen)}
 						size="icon"
 						variant="ghost"
 					>
-						<Menu size={24} />
+						<ChevronDown
+							className={`transition-transform duration-200 ${isOpen ? "rotate-180" : ""}`}
+							size={20}
+						/>
 					</Button>
-				</SheetTrigger>
-				<SheetContent
-					className="w-80 bg-slate-900 text-white border-slate-800"
-					side="left"
+				</div>
+
+				{/* Mobile nav */}
+				<div
+					className={`grid transition-all duration-200 sm:hidden ${
+						isOpen
+							? "grid-rows-[1fr] border-t border-white/10"
+							: "grid-rows-[0fr]"
+					}`}
 				>
-					<SheetHeader
-						className="border-b border-slate-800 pb-4"
-						style={{ backgroundColor: UCR_BLUE }}
-					>
-						<SheetTitle className="flex items-center gap-2 text-white">
-							<GraduationCap size={24} style={{ color: UCR_GOLD }} />
-							Navigation
-						</SheetTitle>
-						<SheetDescription className="text-white/70">
-							Navigate the Microeconomics Hub
-						</SheetDescription>
-					</SheetHeader>
-
-					<nav className="flex-1 p-4 overflow-y-auto">
-						<SheetClose asChild>
-							<Link
-								activeProps={{
-									className:
-										"flex items-center gap-3 p-3 rounded-lg transition-colors mb-2 text-white",
-									style: { backgroundColor: UCR_BLUE },
-								}}
-								className="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-800 transition-colors mb-2"
-								to="/"
-							>
-								<Home size={20} />
-								<span className="font-medium">Home</span>
-							</Link>
-						</SheetClose>
-
-						<div className="mt-4 mb-2 px-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
-							Sections
-						</div>
-
-						<SheetClose asChild>
+					<div className="overflow-hidden">
+						<div className="flex flex-col gap-1 px-4 py-3">
 							<Button
-								className="w-full justify-start gap-3 p-3 h-auto text-left text-white hover:bg-slate-800 mb-2"
+								className="w-full justify-start text-white/80 hover:bg-white/10 hover:text-white"
 								onClick={() => scrollToSection("market-shifter")}
 								variant="ghost"
 							>
-								<Gamepad2 size={20} style={{ color: UCR_GOLD }} />
-								<span className="font-medium">The Market Shifter</span>
+								Market Shifter
 							</Button>
-						</SheetClose>
-
-						<SheetClose asChild>
 							<Button
-								className="w-full justify-start gap-3 p-3 h-auto text-left text-white hover:bg-slate-800 mb-2"
+								className="w-full justify-start text-white/80 hover:bg-white/10 hover:text-white"
 								onClick={() => scrollToSection("concept-library")}
 								variant="ghost"
 							>
-								<Library size={20} style={{ color: UCR_BLUE }} />
-								<span className="font-medium">Concept Library</span>
+								Concept Library
 							</Button>
-						</SheetClose>
-					</nav>
-
-					<SheetFooter className="border-t border-slate-800">
-						<p className="text-xs text-slate-500 text-center w-full">
-							UCR Microeconomics Media Project
-						</p>
-					</SheetFooter>
-				</SheetContent>
-			</Sheet>
-
-			<div className="ml-4 flex items-center gap-3">
-				<GraduationCap size={28} style={{ color: UCR_GOLD }} />
-				<Link className="text-xl font-bold text-white" to="/">
-					Microeconomics Hub
-				</Link>
-			</div>
-
-			<div className="hidden md:flex items-center gap-6 ml-auto">
-				<Button
-					className="text-white/80 hover:text-white hover:bg-transparent"
-					onClick={() => scrollToSection("market-shifter")}
-					variant="ghost"
-				>
-					Market Shifter
-				</Button>
-				<Button
-					className="text-white/80 hover:text-white hover:bg-transparent"
-					onClick={() => scrollToSection("concept-library")}
-					variant="ghost"
-				>
-					Concept Library
-				</Button>
-			</div>
-		</header>
+						</div>
+					</div>
+				</div>
+			</header>
+		</div>
 	);
 }

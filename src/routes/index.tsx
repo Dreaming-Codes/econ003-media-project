@@ -28,7 +28,7 @@ function MicroeconomicsHub() {
 	return (
 		<div className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
 			{/* Hero Section - Full viewport height */}
-			<section className="relative min-h-[calc(100vh-64px)] flex flex-col items-center justify-center px-4 md:px-6 text-center overflow-hidden">
+			<section className="relative min-h-screen flex flex-col items-center justify-center px-4 md:px-6 text-center overflow-hidden">
 				{/* Background Decorations */}
 				<div className="absolute inset-0 overflow-hidden pointer-events-none">
 					<div
@@ -187,7 +187,7 @@ function MicroeconomicsHub() {
 			{/* Concept Library Section */}
 			{/* biome-ignore lint/correctness/useUniqueElementIds: Static ID for navigation anchor in single-page app */}
 			<section
-				className="min-h-[calc(100vh-64px)] py-12 md:py-16 px-4 md:px-6"
+				className="min-h-screen py-12 md:py-16 px-4 md:px-6"
 				id="concept-library"
 			>
 				<div className="max-w-5xl mx-auto">
