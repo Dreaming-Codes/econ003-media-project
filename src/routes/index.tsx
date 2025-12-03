@@ -129,14 +129,11 @@ function MicroeconomicsHub() {
 				</motion.div>
 			</section>
 
-			{/* Market Shifter Game Section - Full viewport height */}
+			{/* Market Shifter Game Section */}
 			{/* biome-ignore lint/correctness/useUniqueElementIds: Static ID for navigation anchor in single-page app */}
-			<section
-				className="min-h-[calc(100vh-64px)] flex flex-col"
-				id="market-shifter"
-			>
+			<section className="py-6 lg:py-10" id="market-shifter">
 				{/* Section Header */}
-				<div className="text-center py-6 px-4">
+				<div className="text-center pb-4 px-4">
 					<Badge
 						className="inline-flex items-center gap-2 px-3 py-1.5 mb-3 border-transparent"
 						style={{ backgroundColor: `${UCR_GOLD}20` }}
@@ -156,9 +153,7 @@ function MicroeconomicsHub() {
 				</div>
 
 				{/* Game Container */}
-				<div className="flex-1 min-h-0">
-					<MarketShifterGame />
-				</div>
+				<MarketShifterGame />
 			</section>
 
 			{/* Features Overview - Compact */}
