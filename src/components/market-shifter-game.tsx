@@ -10,7 +10,7 @@ import {
 	XCircle,
 } from "lucide-react";
 import { AnimatePresence, motion, type PanInfo } from "motion/react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -34,7 +34,7 @@ const UCR_GOLD = "#F1AB00";
 
 const SWIPE_THRESHOLD = 100;
 
-// Global image cache to store preloaded images
+// Image cache to store preloaded images (module-scoped for cleanup)
 const imageCache = new Map<string, string>();
 
 // Preload an image and cache its blob URL
@@ -49,6 +49,14 @@ async function preloadImage(src: string): Promise<string> {
 	const blobUrl = URL.createObjectURL(blob);
 	imageCache.set(src, blobUrl);
 	return blobUrl;
+}
+
+// Revoke all blob URLs and clear cache
+function clearImageCache(): void {
+	for (const blobUrl of imageCache.values()) {
+		URL.revokeObjectURL(blobUrl);
+	}
+	imageCache.clear();
 }
 
 function shuffleArray<T>(array: T[]): T[] {
@@ -73,31 +81,23 @@ export default function MarketShifterGame() {
 	);
 	const [exitX, setExitX] = useState(0);
 	const [currentImageUrl, setCurrentImageUrl] = useState<string>("");
-	const preloadedRef = useRef<Set<string>>(new Set());
 
 	const currentScenario = scenarios[currentIndex];
 
-	// Shuffle scenarios on initial mount (client-side only)
+	// Shuffle scenarios on initial mount and cleanup on unmount
 	useEffect(() => {
 		setScenarios(shuffleArray(MARKET_SCENARIOS));
+		return () => clearImageCache();
 	}, []);
 
-	// Preload current image on mount and next image when currentIndex changes
+	// Preload current and next image
 	useEffect(() => {
 		const currentSrc = scenarios[currentIndex].mediaSource;
 		const nextIndex = (currentIndex + 1) % scenarios.length;
 		const nextSrc = scenarios[nextIndex].mediaSource;
 
-		// Load current image and set it
-		preloadImage(currentSrc).then((blobUrl) => {
-			setCurrentImageUrl(blobUrl);
-		});
-
-		// Preload next image in background
-		if (!preloadedRef.current.has(nextSrc)) {
-			preloadedRef.current.add(nextSrc);
-			preloadImage(nextSrc);
-		}
+		preloadImage(currentSrc).then(setCurrentImageUrl);
+		preloadImage(nextSrc);
 	}, [currentIndex, scenarios]);
 
 	const isCorrect =
