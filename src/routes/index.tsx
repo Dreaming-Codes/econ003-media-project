@@ -88,7 +88,7 @@ function MicroeconomicsHub() {
 
 					{/* Subtitle */}
 					<p className="text-base md:text-lg text-gray-300 mb-3 max-w-xl mx-auto">
-						Master Supply & Demand with an interactive Tinder-style game
+						Swipe your way through Supply & Demand scenarios
 					</p>
 
 					{/* Textbook Reference */}
