@@ -135,13 +135,18 @@ function MicroeconomicsHub() {
 					</div>
 				</motion.div>
 
-				<motion.div
+				<motion.button
 					animate={{ y: [0, 8, 0] }}
-					className="absolute bottom-8 left-1/2 -translate-x-1/2"
+					className="absolute bottom-8 left-1/2 -translate-x-1/2 cursor-pointer"
+					onClick={() => scrollToSection("market-shifter")}
 					transition={{ repeat: Number.POSITIVE_INFINITY, duration: 2 }}
+					type="button"
 				>
-					<ChevronDown className="text-white/40" size={28} />
-				</motion.div>
+					<ChevronDown
+						className="text-white/40 hover:text-white/60 transition-colors"
+						size={28}
+					/>
+				</motion.button>
 			</section>
 
 			{/* biome-ignore lint/correctness/useUniqueElementIds: Static ID for navigation anchor in single-page app */}
