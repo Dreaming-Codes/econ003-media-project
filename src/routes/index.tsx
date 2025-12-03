@@ -3,6 +3,7 @@ import {
 	BookOpen,
 	ChevronDown,
 	Gamepad2,
+	Github,
 	GraduationCap,
 	Library,
 	Pointer,
@@ -118,6 +119,25 @@ function MicroeconomicsHub() {
 							>
 								<Library size={18} />
 								Concept Library
+							</Button>
+						</motion.div>
+					</div>
+
+					{/* Source Code Button */}
+					<div className="flex justify-center mt-3">
+						<motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+							<Button
+								asChild
+								className="px-6 py-2.5 h-auto rounded-xl font-semibold bg-slate-700 hover:bg-slate-600 text-white shadow-lg hover:shadow-xl"
+							>
+								<a
+									href="https://github.com/Dreaming-Codes/econ003-media-project"
+									rel="noopener noreferrer"
+									target="_blank"
+								>
+									<Github size={18} />
+									View Source Code
+								</a>
 							</Button>
 						</motion.div>
 					</div>
