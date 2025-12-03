@@ -38,7 +38,7 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		correctCurve: "supply",
 		correctShift: "left",
 		concept: "Input Prices / Resource Availability",
-		chapter: "Chapter 4: Supply and Demand",
+		chapter: "Chapter 3: The Market at Work: Supply and Demand",
 		explanation:
 			"The semiconductor shortage reduced the availability of a critical input for many products. When input costs rise or inputs become scarce, supply decreases (shifts left), leading to higher prices and lower quantities.",
 	},
@@ -53,7 +53,7 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		correctCurve: "supply",
 		correctShift: "left",
 		concept: "Number of Sellers",
-		chapter: "Chapter 4: Supply and Demand",
+		chapter: "Chapter 3: The Market at Work: Supply and Demand",
 		explanation:
 			"Sanctions effectively removed Russia as a supplier in Western markets. Fewer sellers means less supply available at every price point, shifting the supply curve to the left.",
 	},
@@ -68,7 +68,7 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		correctCurve: "demand",
 		correctShift: "right",
 		concept: "Consumer Preferences / Tastes",
-		chapter: "Chapter 4: Supply and Demand",
+		chapter: "Chapter 3: The Market at Work: Supply and Demand",
 		explanation:
 			"Taylor Swift's massive popularity increased consumer desire for concert tickets and related goods (hotels, flights). When preferences shift favorably toward a good, demand increases (shifts right).",
 	},
@@ -83,7 +83,7 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		correctCurve: "demand",
 		correctShift: "right",
 		concept: "Subsidies / Government Policy",
-		chapter: "Chapter 4: Supply and Demand",
+		chapter: "Chapter 3: The Market at Work: Supply and Demand",
 		explanation:
 			"Tax credits reduce the effective price consumers pay. This acts like a decrease in price from the buyer's perspective, increasing quantity demanded at every market price—a rightward shift in demand.",
 	},
@@ -98,7 +98,7 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		correctCurve: "demand",
 		correctShift: "right",
 		concept: "Change in Consumer Circumstances",
-		chapter: "Chapter 4: Supply and Demand",
+		chapter: "Chapter 3: The Market at Work: Supply and Demand",
 		explanation:
 			"The shift to remote work changed how consumers valued home office goods. This change in circumstances dramatically increased demand for these products, shifting the demand curve right.",
 	},
@@ -113,7 +113,7 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		correctCurve: "supply",
 		correctShift: "left",
 		concept: "Natural Disasters / Supply Shocks",
-		chapter: "Chapter 4: Supply and Demand",
+		chapter: "Chapter 3: The Market at Work: Supply and Demand",
 		explanation:
 			"The avian flu outbreak killed millions of egg-laying hens, drastically reducing the number of eggs that could be produced. This negative supply shock shifted supply left, raising prices significantly.",
 	},
@@ -128,7 +128,7 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		correctCurve: "demand",
 		correctShift: "right",
 		concept: "Expectations / Future Profitability",
-		chapter: "Chapter 4: Supply and Demand",
+		chapter: "Chapter 3: The Market at Work: Supply and Demand",
 		explanation:
 			"Companies expected AI to be transformative for their businesses. This expectation of future value increased current demand for AI resources (talent, chips), shifting demand right.",
 	},
@@ -143,7 +143,7 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		correctCurve: "supply",
 		correctShift: "left",
 		concept: "Transportation / Distribution Disruption",
-		chapter: "Chapter 4: Supply and Demand",
+		chapter: "Chapter 3: The Market at Work: Supply and Demand",
 		explanation:
 			"The blockage prevented goods from reaching markets through a critical shipping route. Transportation disruptions reduce the supply that can reach consumers, shifting supply left.",
 	},
@@ -158,7 +158,7 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		correctCurve: "demand",
 		correctShift: "right",
 		concept: "Derived Demand / Complementary Goods",
-		chapter: "Chapter 4: Supply and Demand",
+		chapter: "Chapter 3: The Market at Work: Supply and Demand",
 		explanation:
 			"As AI software became more valuable, demand for the hardware needed to run it (GPUs) increased. This is derived demand—the demand for GPUs is derived from demand for AI capabilities.",
 	},
@@ -173,7 +173,7 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		correctCurve: "demand",
 		correctShift: "right",
 		concept: "Consumer Income",
-		chapter: "Chapter 4: Supply and Demand",
+		chapter: "Chapter 3: The Market at Work: Supply and Demand",
 		explanation:
 			"When borrowers didn't have to make loan payments, they had more disposable income. For normal goods, an increase in income increases demand (shifts right) as consumers can afford more.",
 	},

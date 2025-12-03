@@ -70,7 +70,7 @@ const CONCEPTS: Concept[] = [
 			analysis:
 				"PED = -3% / 10% = -0.3. Since |0.3| < 1, demand for gasoline is inelastic. This makes sense because gasoline has few substitutes for most drivers, and people need it to commute. Oil companies know this, which is why gas prices can rise significantly without dramatically reducing sales.",
 		},
-		textbookReference: "Mateer & Coppock, Chapter 5: Elasticity",
+		textbookReference: "Mateer & Coppock, Chapter 4: Elasticity",
 	},
 	{
 		id: "market-equilibrium",
@@ -91,7 +91,8 @@ const CONCEPTS: Concept[] = [
 			analysis:
 				"If tickets are priced at $50 but 100,000 people want tickets at that price, there's a shortage of 50,000 tickets. The market equilibrium would be at a higher price where only 50,000 people are willing to buy. This is why Taylor Swift tickets cost so much on resale markets—the original price was below equilibrium.",
 		},
-		textbookReference: "Mateer & Coppock, Chapter 4: Supply and Demand",
+		textbookReference:
+			"Mateer & Coppock, Chapter 3: The Market at Work: Supply and Demand",
 	},
 ];
 
