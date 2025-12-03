@@ -149,7 +149,10 @@ function ConceptAccordion({
 							{concept.title}
 						</h3>
 						<p className="text-sm text-gray-500 mt-1 font-normal group-hover:text-gray-600 transition-colors">
-							Click to explore definition, key points & examples
+							<span className="hidden sm:inline">
+								Click to explore definition, key points & examples
+							</span>
+							<span className="sm:hidden">Tap to explore</span>
 						</p>
 					</div>
 					<motion.div
