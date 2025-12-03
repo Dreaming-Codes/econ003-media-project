@@ -27,17 +27,21 @@ function MicroeconomicsHub() {
 
 	return (
 		<div className="bg-gradient-to-b from-slate-900 via-slate-800 to-slate-900">
-			{/* Hero Section - Compact */}
-			<section className="relative py-12 md:py-16 px-4 md:px-6 text-center overflow-hidden">
+			{/* Hero Section - Full viewport height */}
+			<section className="relative min-h-[calc(100vh-64px)] flex flex-col items-center justify-center px-4 md:px-6 text-center overflow-hidden">
 				{/* Background Decorations */}
 				<div className="absolute inset-0 overflow-hidden pointer-events-none">
 					<div
-						className="absolute top-10 left-10 w-48 h-48 rounded-full blur-3xl opacity-10"
+						className="absolute top-1/4 -left-20 w-96 h-96 rounded-full blur-3xl opacity-30"
 						style={{ backgroundColor: UCR_BLUE }}
 					/>
 					<div
-						className="absolute bottom-10 right-10 w-48 h-48 rounded-full blur-3xl opacity-10"
+						className="absolute bottom-1/4 -right-20 w-96 h-96 rounded-full blur-3xl opacity-30"
 						style={{ backgroundColor: UCR_GOLD }}
+					/>
+					<div
+						className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-3xl opacity-10"
+						style={{ backgroundColor: UCR_BLUE }}
 					/>
 				</div>
 
@@ -121,11 +125,11 @@ function MicroeconomicsHub() {
 
 				{/* Scroll Indicator */}
 				<motion.div
-					animate={{ y: [0, 6, 0] }}
-					className="absolute bottom-4 left-1/2 -translate-x-1/2"
+					animate={{ y: [0, 8, 0] }}
+					className="absolute bottom-8 left-1/2 -translate-x-1/2"
 					transition={{ repeat: Number.POSITIVE_INFINITY, duration: 2 }}
 				>
-					<ChevronDown className="text-white/40" size={24} />
+					<ChevronDown className="text-white/40" size={28} />
 				</motion.div>
 			</section>
 
@@ -157,7 +161,7 @@ function MicroeconomicsHub() {
 			</section>
 
 			{/* Features Overview - Compact */}
-			<section className="py-10 px-4 md:px-6 bg-slate-800/30">
+			<section className="py-10 px-4 md:px-6">
 				<div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
 					<FeatureCard
 						description="Test your understanding with real-world economic events from 2020-2024"
@@ -182,7 +186,10 @@ function MicroeconomicsHub() {
 
 			{/* Concept Library Section */}
 			{/* biome-ignore lint/correctness/useUniqueElementIds: Static ID for navigation anchor in single-page app */}
-			<section className="py-12 md:py-16 px-4 md:px-6" id="concept-library">
+			<section
+				className="min-h-[calc(100vh-64px)] py-12 md:py-16 px-4 md:px-6"
+				id="concept-library"
+			>
 				<div className="max-w-5xl mx-auto">
 					<motion.div
 						className="text-center mb-8"

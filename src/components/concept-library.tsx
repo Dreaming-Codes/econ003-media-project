@@ -131,10 +131,10 @@ function ConceptAccordion({
 }: ConceptAccordionProps) {
 	return (
 		<motion.div layout>
-			<Card className="bg-white rounded-xl shadow-lg overflow-hidden border-0 py-0 gap-0">
+			<Card className="bg-white rounded-xl shadow-lg overflow-hidden border-0 py-0 gap-0 hover:shadow-xl transition-shadow cursor-pointer">
 				{/* Header */}
 				<Button
-					className="w-full p-4 md:p-6 h-auto flex items-center gap-4 text-left hover:bg-gray-50 justify-start rounded-none"
+					className="w-full p-4 md:p-6 h-auto flex items-center gap-4 text-left hover:bg-gray-50 justify-start rounded-none group"
 					onClick={onToggle}
 					variant="ghost"
 				>
@@ -144,20 +144,20 @@ function ConceptAccordion({
 					>
 						{concept.icon}
 					</div>
-					<div className="flex-1">
+					<div className="flex-1 min-w-0">
 						<h3 className="text-lg md:text-xl font-bold text-gray-900">
 							{concept.title}
 						</h3>
-						<p className="text-sm text-gray-500 mt-1 line-clamp-1 font-normal">
-							{concept.definition}
+						<p className="text-sm text-gray-500 mt-1 font-normal group-hover:text-gray-600 transition-colors">
+							Click to explore definition, key points & examples
 						</p>
 					</div>
 					<motion.div
 						animate={{ rotate: isOpen ? 180 : 0 }}
-						className="flex-shrink-0"
+						className="flex-shrink-0 p-2 rounded-full bg-gray-100 group-hover:bg-gray-200 transition-colors"
 						transition={{ duration: 0.2 }}
 					>
-						<ChevronDown className="text-gray-400" size={24} />
+						<ChevronDown className="text-gray-500" size={20} />
 					</motion.div>
 				</Button>
 
