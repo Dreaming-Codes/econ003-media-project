@@ -51,7 +51,18 @@ async function preloadImage(src: string): Promise<string> {
 	return blobUrl;
 }
 
+function shuffleArray<T>(array: T[]): T[] {
+	const shuffled = [...array];
+	for (let i = shuffled.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+	}
+	return shuffled;
+}
+
 export default function MarketShifterGame() {
+	const [scenarios, setScenarios] =
+		useState<MarketScenario[]>(MARKET_SCENARIOS);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [phase, setPhase] = useState<GamePhase>("choose-curve");
 	const [selectedCurve, setSelectedCurve] = useState<CurveType | null>(null);
@@ -64,13 +75,18 @@ export default function MarketShifterGame() {
 	const [currentImageUrl, setCurrentImageUrl] = useState<string>("");
 	const preloadedRef = useRef<Set<string>>(new Set());
 
-	const currentScenario = MARKET_SCENARIOS[currentIndex];
+	const currentScenario = scenarios[currentIndex];
+
+	// Shuffle scenarios on initial mount (client-side only)
+	useEffect(() => {
+		setScenarios(shuffleArray(MARKET_SCENARIOS));
+	}, []);
 
 	// Preload current image on mount and next image when currentIndex changes
 	useEffect(() => {
-		const currentSrc = MARKET_SCENARIOS[currentIndex].mediaSource;
-		const nextIndex = (currentIndex + 1) % MARKET_SCENARIOS.length;
-		const nextSrc = MARKET_SCENARIOS[nextIndex].mediaSource;
+		const currentSrc = scenarios[currentIndex].mediaSource;
+		const nextIndex = (currentIndex + 1) % scenarios.length;
+		const nextSrc = scenarios[nextIndex].mediaSource;
 
 		// Load current image and set it
 		preloadImage(currentSrc).then((blobUrl) => {
@@ -82,7 +98,7 @@ export default function MarketShifterGame() {
 			preloadedRef.current.add(nextSrc);
 			preloadImage(nextSrc);
 		}
-	}, [currentIndex]);
+	}, [currentIndex, scenarios]);
 
 	const isCorrect =
 		userAnswer &&
@@ -149,13 +165,13 @@ export default function MarketShifterGame() {
 	const nextScenario = useCallback(() => {
 		setExitX(300);
 		setTimeout(() => {
-			setCurrentIndex((prev) => (prev + 1) % MARKET_SCENARIOS.length);
+			setCurrentIndex((prev) => (prev + 1) % scenarios.length);
 			setPhase("choose-curve");
 			setSelectedCurve(null);
 			setUserAnswer(null);
 			setExitX(0);
 		}, 100);
-	}, []);
+	}, [scenarios.length]);
 
 	const goBack = useCallback(() => {
 		if (phase === "choose-direction") {
@@ -165,6 +181,7 @@ export default function MarketShifterGame() {
 	}, [phase]);
 
 	const resetGame = useCallback(() => {
+		setScenarios(shuffleArray(MARKET_SCENARIOS));
 		setCurrentIndex(0);
 		setPhase("choose-curve");
 		setSelectedCurve(null);
@@ -206,7 +223,7 @@ export default function MarketShifterGame() {
 				</Badge>
 				<div className="flex items-center gap-2">
 					<span className="text-white/50 text-sm">
-						{currentIndex + 1} / {MARKET_SCENARIOS.length}
+						{currentIndex + 1} / {scenarios.length}
 					</span>
 					<Button
 						className="text-white/70 hover:text-white hover:bg-white/10"
