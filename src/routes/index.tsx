@@ -150,7 +150,7 @@ function MicroeconomicsHub() {
 			</section>
 
 			{/* biome-ignore lint/correctness/useUniqueElementIds: Static ID for navigation anchor in single-page app */}
-			<section className="py-6 lg:py-10" id="market-shifter">
+			<section className="scroll-mt-24 py-6 lg:py-10" id="market-shifter">
 				<div className="text-center pb-4 px-4">
 					<Badge
 						className="inline-flex items-center gap-2 px-3 py-1.5 mb-3 border-transparent"
@@ -198,7 +198,7 @@ function MicroeconomicsHub() {
 
 			{/* biome-ignore lint/correctness/useUniqueElementIds: Static ID for navigation anchor in single-page app */}
 			<section
-				className="min-h-screen py-12 md:py-16 px-4 md:px-6"
+				className="min-h-screen scroll-mt-24 py-12 md:py-16 px-4 md:px-6"
 				id="concept-library"
 			>
 				<div className="max-w-5xl mx-auto">
