@@ -36,11 +36,11 @@ export const Route = createRootRoute({
 
 function RootDocument({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en">
+		<html className="overflow-x-hidden" lang="en">
 			<head>
 				<HeadContent />
 			</head>
-			<body>
+			<body className="overflow-x-hidden">
 				<Header />
 				{children}
 				<TanStackDevtools
