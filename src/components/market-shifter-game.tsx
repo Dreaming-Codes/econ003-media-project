@@ -80,8 +80,8 @@ export default function MarketShifterGame() {
 	const [currentImageUrl, setCurrentImageUrl] = useState<string>("");
 	const [hasKeyboard, setHasKeyboard] = useState(false);
 
-	// Ref to prevent multiple rapid clicks from triggering multiple score updates
-	const isProcessingRef = useRef(false);
+	// Ref to prevent multiple rapid interactions from triggering race conditions
+	const isLockedRef = useRef(false);
 
 	const currentScenario = scenarios[currentIndex];
 
@@ -125,27 +125,25 @@ export default function MarketShifterGame() {
 
 	const handleCurveSelect = useCallback(
 		(curve: CurveType) => {
-			if (phase !== "choose-curve" || isProcessingRef.current) return;
-			isProcessingRef.current = true;
+			if (phase !== "choose-curve" || isLockedRef.current) return;
+			isLockedRef.current = true;
+			setSwipeDirection(null);
 			setSelectedCurve(curve);
 			setPhase("choose-direction");
-			// Reset after a short delay to allow for the next phase
-			setTimeout(() => {
-				isProcessingRef.current = false;
-			}, 100);
+			// Reset lock synchronously after React has processed the state update
+			requestAnimationFrame(() => {
+				isLockedRef.current = false;
+			});
 		},
 		[phase],
 	);
 
 	const handleDirectionSelect = useCallback(
 		(direction: ShiftDirection) => {
-			if (
-				!selectedCurve ||
-				phase !== "choose-direction" ||
-				isProcessingRef.current
-			)
+			if (!selectedCurve || phase !== "choose-direction" || isLockedRef.current)
 				return;
-			isProcessingRef.current = true;
+			isLockedRef.current = true;
+			setSwipeDirection(null);
 
 			const correct =
 				selectedCurve === currentScenario.correctCurve &&
@@ -157,6 +155,7 @@ export default function MarketShifterGame() {
 				correct: prev.correct + (correct ? 1 : 0),
 				total: prev.total + 1,
 			}));
+			// Keep locked - will be unlocked in nextScenario
 		},
 		[selectedCurve, currentScenario, phase],
 	);
@@ -173,20 +172,23 @@ export default function MarketShifterGame() {
 	);
 
 	const nextScenario = useCallback(() => {
-		setTimeout(() => {
-			const nextIndex = currentIndex + 1;
-			if (nextIndex >= scenarios.length) {
-				setPhase("complete");
-			} else {
-				setCurrentIndex(nextIndex);
-				setPhase("choose-curve");
-				setSelectedCurve(null);
-				setUserAnswer(null);
-			}
-			setExitX(0);
-			// Reset processing flag for the new scenario
-			isProcessingRef.current = false;
-		}, 100);
+		setSwipeDirection(null);
+		setExitX(0);
+
+		const nextIdx = currentIndex + 1;
+		if (nextIdx >= scenarios.length) {
+			setPhase("complete");
+			isLockedRef.current = false;
+		} else {
+			setCurrentIndex(nextIdx);
+			setPhase("choose-curve");
+			setSelectedCurve(null);
+			setUserAnswer(null);
+			// Reset lock after React processes state update
+			requestAnimationFrame(() => {
+				isLockedRef.current = false;
+			});
+		}
 	}, [currentIndex, scenarios.length]);
 
 	const handleDragEnd = useCallback(
@@ -199,38 +201,31 @@ export default function MarketShifterGame() {
 				) {
 					setSwipeDirection(info.offset.x > 0 ? "right" : "left");
 					setExitX(info.offset.x > 0 ? 300 : -300);
-					setTimeout(() => {
-						nextScenario();
-						setSwipeDirection(null);
-					}, 200);
+					nextScenario();
 				}
 				return;
 			}
 
+			// Block drag actions if locked (but not for result phase above)
+			if (isLockedRef.current) return;
+
 			if (info.offset.x > SWIPE_THRESHOLD) {
 				setSwipeDirection("right");
 				setExitX(300);
-				setTimeout(() => {
-					handleSwipe("right");
-					setSwipeDirection(null);
-				}, 200);
+				handleSwipe("right");
 			} else if (info.offset.x < -SWIPE_THRESHOLD) {
 				setSwipeDirection("left");
 				setExitX(-300);
-				setTimeout(() => {
-					handleSwipe("left");
-					setSwipeDirection(null);
-				}, 200);
+				handleSwipe("left");
 			}
 		},
 		[phase, handleSwipe, nextScenario],
 	);
 
 	const goBack = useCallback(() => {
-		if (phase === "choose-direction") {
+		if (phase === "choose-direction" && !isLockedRef.current) {
 			setPhase("choose-curve");
 			setSelectedCurve(null);
-			isProcessingRef.current = false;
 		}
 	}, [phase]);
 
@@ -241,7 +236,9 @@ export default function MarketShifterGame() {
 		setSelectedCurve(null);
 		setUserAnswer(null);
 		setScore({ correct: 0, total: 0 });
-		isProcessingRef.current = false;
+		setSwipeDirection(null);
+		setExitX(0);
+		isLockedRef.current = false;
 	}, []);
 
 	const handleKeyPress = useCallback(
@@ -252,20 +249,17 @@ export default function MarketShifterGame() {
 				// In result phase, any arrow key goes to next scenario
 				setSwipeDirection(direction);
 				setExitX(direction === "right" ? 300 : -300);
-				setTimeout(() => {
-					nextScenario();
-					setSwipeDirection(null);
-				}, 200);
+				nextScenario();
 				return;
 			}
+
+			// Block key actions if locked (but not for result phase above)
+			if (isLockedRef.current) return;
 
 			// In other phases, trigger the swipe action
 			setSwipeDirection(direction);
 			setExitX(direction === "right" ? 300 : -300);
-			setTimeout(() => {
-				handleSwipe(direction);
-				setSwipeDirection(null);
-			}, 200);
+			handleSwipe(direction);
 		},
 		[phase, handleSwipe, nextScenario],
 	);
