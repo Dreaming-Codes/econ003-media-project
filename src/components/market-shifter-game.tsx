@@ -1,3 +1,4 @@
+import confetti from "canvas-confetti";
 import {
 	ArrowLeft,
 	ArrowRight,
@@ -33,6 +34,38 @@ const UCR_BLUE = "#2D6CC0";
 const UCR_GOLD = "#F1AB00";
 
 const SWIPE_THRESHOLD = 100;
+
+function triggerConfettiFromElement(element: HTMLElement) {
+	const rect = element.getBoundingClientRect();
+	const x = (rect.left + rect.width / 2) / window.innerWidth;
+	const y = (rect.top + rect.height / 2) / window.innerHeight;
+
+	const duration = 3000;
+	const end = Date.now() + duration;
+
+	const frame = () => {
+		confetti({
+			particleCount: 3,
+			angle: 60,
+			spread: 55,
+			origin: { x, y },
+			colors: [UCR_BLUE, UCR_GOLD, "#22c55e", "#ef4444", "#8b5cf6"],
+		});
+		confetti({
+			particleCount: 3,
+			angle: 120,
+			spread: 55,
+			origin: { x, y },
+			colors: [UCR_BLUE, UCR_GOLD, "#22c55e", "#ef4444", "#8b5cf6"],
+		});
+
+		if (Date.now() < end) {
+			requestAnimationFrame(frame);
+		}
+	};
+
+	frame();
+}
 
 const imageCache = new Map<string, string>();
 
@@ -82,8 +115,22 @@ export default function MarketShifterGame() {
 
 	// Ref to prevent multiple rapid interactions from triggering race conditions
 	const isLockedRef = useRef(false);
+	// Ref for the complete card to position confetti
+	const completeCardRef = useRef<HTMLDivElement>(null);
 
 	const currentScenario = scenarios[currentIndex];
+
+	// Trigger confetti when game is complete with perfect score
+	useEffect(() => {
+		if (
+			phase === "complete" &&
+			score.correct === score.total &&
+			score.total > 0 &&
+			completeCardRef.current
+		) {
+			triggerConfettiFromElement(completeCardRef.current);
+		}
+	}, [phase, score.correct, score.total]);
 
 	useEffect(() => {
 		setScenarios(shuffleArray(MARKET_SCENARIOS));
@@ -334,7 +381,10 @@ export default function MarketShifterGame() {
 						animate={{ scale: 1, opacity: 1 }}
 						transition={{ type: "spring", stiffness: 300, damping: 25 }}
 					>
-						<Card className="bg-white rounded-2xl shadow-2xl p-6 border-0">
+						<Card
+							ref={completeCardRef}
+							className="bg-white rounded-2xl shadow-2xl p-6 border-0"
+						>
 							<CardContent className="p-0 space-y-6">
 								<div className="text-center">
 									<CheckCircle2
