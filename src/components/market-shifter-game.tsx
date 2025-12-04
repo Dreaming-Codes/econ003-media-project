@@ -134,9 +134,39 @@ export default function MarketShifterGame() {
 		[phase, handleCurveSelect, handleDirectionSelect],
 	);
 
+	const nextScenario = useCallback(() => {
+		setExitX(300);
+		setTimeout(() => {
+			const nextIndex = currentIndex + 1;
+			if (nextIndex >= scenarios.length) {
+				setPhase("complete");
+			} else {
+				setCurrentIndex(nextIndex);
+				setPhase("choose-curve");
+				setSelectedCurve(null);
+				setUserAnswer(null);
+			}
+			setExitX(0);
+		}, 100);
+	}, [currentIndex, scenarios.length]);
+
 	const handleDragEnd = useCallback(
 		(_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
-			if (phase === "result") return;
+			if (phase === "result") {
+				// In result phase, any swipe goes to next scenario
+				if (
+					info.offset.x > SWIPE_THRESHOLD ||
+					info.offset.x < -SWIPE_THRESHOLD
+				) {
+					setSwipeDirection(info.offset.x > 0 ? "right" : "left");
+					setExitX(info.offset.x > 0 ? 300 : -300);
+					setTimeout(() => {
+						nextScenario();
+						setSwipeDirection(null);
+					}, 200);
+				}
+				return;
+			}
 
 			if (info.offset.x > SWIPE_THRESHOLD) {
 				setSwipeDirection("right");
@@ -154,24 +184,8 @@ export default function MarketShifterGame() {
 				}, 200);
 			}
 		},
-		[phase, handleSwipe],
+		[phase, handleSwipe, nextScenario],
 	);
-
-	const nextScenario = useCallback(() => {
-		setExitX(300);
-		setTimeout(() => {
-			const nextIndex = currentIndex + 1;
-			if (nextIndex >= scenarios.length) {
-				setPhase("complete");
-			} else {
-				setCurrentIndex(nextIndex);
-				setPhase("choose-curve");
-				setSelectedCurve(null);
-				setUserAnswer(null);
-			}
-			setExitX(0);
-		}, 100);
-	}, [currentIndex, scenarios.length]);
 
 	const goBack = useCallback(() => {
 		if (phase === "choose-direction") {
@@ -306,7 +320,7 @@ export default function MarketShifterGame() {
 								<motion.div
 									key={`${currentScenario.id}-${phase}`}
 									className="relative w-full bg-white rounded-2xl shadow-2xl overflow-hidden cursor-grab active:cursor-grabbing z-10"
-									drag={phase !== "result" ? "x" : false}
+									drag="x"
 									dragConstraints={{ left: 0, right: 0 }}
 									dragElastic={0.8}
 									onDragEnd={handleDragEnd}
