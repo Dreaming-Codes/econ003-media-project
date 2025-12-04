@@ -135,7 +135,6 @@ export default function MarketShifterGame() {
 	);
 
 	const nextScenario = useCallback(() => {
-		setExitX(300);
 		setTimeout(() => {
 			const nextIndex = currentIndex + 1;
 			if (nextIndex >= scenarios.length) {
@@ -503,7 +502,10 @@ export default function MarketShifterGame() {
 												isCorrect={isCorrect ?? false}
 												scenario={currentScenario}
 												userAnswer={userAnswer}
-												onNext={nextScenario}
+												onNext={() => {
+													setExitX(300);
+													nextScenario();
+												}}
 											/>
 										)}
 									</div>
