@@ -90,7 +90,7 @@ const CONCEPTS: Concept[] = [
 			scenario:
 				"The market for concert tickets where supply is fixed at 50,000 seats.",
 			analysis:
-				"If tickets are priced at $50 but 100,000 people want tickets at that price, there's a shortage of 50,000 tickets. The market equilibrium would be at a higher price where only 50,000 people are willing to buy. This is why Taylor Swift tickets cost so much on resale markets—the original price was below equilibrium.",
+				"If tickets are priced at $50 but 100,000 people want tickets at that price, there's a shortage of 50,000 tickets. The market equilibrium would be at a higher price where only 50,000 people are willing to buy. This is why Taylor Swift tickets cost so much on resale markets, the original price was below equilibrium.",
 		},
 		textbookReference:
 			"Mateer & Coppock, Principles of Microeconomics, Chapter 3: The Market at Work: Supply and Demand",

@@ -234,7 +234,15 @@ function MicroeconomicsHub() {
 			<footer className="py-6 px-4 md:px-6 border-t border-white/10">
 				<div className="max-w-5xl mx-auto text-center">
 					<p className="text-gray-500 text-sm">
-						Created for UCR Microeconomics | Media Project
+						Created with ❤️ for UCR Microeconomics | Media Project by{" "}
+						<a
+							href="https://dreaming.codes"
+							target="_blank"
+							rel="noopener noreferrer"
+							className="text-blue-400 hover:text-blue-300 underline"
+						>
+							Lorenzo Rizzotti
+						</a>
 					</p>
 					<p className="text-gray-600 text-xs mt-1">
 						Reference: Mateer, D. & Coppock, L.{" "}
