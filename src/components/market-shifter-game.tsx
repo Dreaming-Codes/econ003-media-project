@@ -10,7 +10,7 @@ import {
 	XCircle,
 } from "lucide-react";
 import { AnimatePresence, motion, type PanInfo } from "motion/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -80,6 +80,9 @@ export default function MarketShifterGame() {
 	const [currentImageUrl, setCurrentImageUrl] = useState<string>("");
 	const [hasKeyboard, setHasKeyboard] = useState(false);
 
+	// Ref to prevent multiple rapid clicks from triggering multiple score updates
+	const isProcessingRef = useRef(false);
+
 	const currentScenario = scenarios[currentIndex];
 
 	useEffect(() => {
@@ -120,14 +123,29 @@ export default function MarketShifterGame() {
 		userAnswer.curve === currentScenario.correctCurve &&
 		userAnswer.direction === currentScenario.correctShift;
 
-	const handleCurveSelect = useCallback((curve: CurveType) => {
-		setSelectedCurve(curve);
-		setPhase("choose-direction");
-	}, []);
+	const handleCurveSelect = useCallback(
+		(curve: CurveType) => {
+			if (phase !== "choose-curve" || isProcessingRef.current) return;
+			isProcessingRef.current = true;
+			setSelectedCurve(curve);
+			setPhase("choose-direction");
+			// Reset after a short delay to allow for the next phase
+			setTimeout(() => {
+				isProcessingRef.current = false;
+			}, 100);
+		},
+		[phase],
+	);
 
 	const handleDirectionSelect = useCallback(
 		(direction: ShiftDirection) => {
-			if (!selectedCurve) return;
+			if (
+				!selectedCurve ||
+				phase !== "choose-direction" ||
+				isProcessingRef.current
+			)
+				return;
+			isProcessingRef.current = true;
 
 			const correct =
 				selectedCurve === currentScenario.correctCurve &&
@@ -140,7 +158,7 @@ export default function MarketShifterGame() {
 				total: prev.total + 1,
 			}));
 		},
-		[selectedCurve, currentScenario],
+		[selectedCurve, currentScenario, phase],
 	);
 
 	const handleSwipe = useCallback(
@@ -166,6 +184,8 @@ export default function MarketShifterGame() {
 				setUserAnswer(null);
 			}
 			setExitX(0);
+			// Reset processing flag for the new scenario
+			isProcessingRef.current = false;
 		}, 100);
 	}, [currentIndex, scenarios.length]);
 
@@ -210,6 +230,7 @@ export default function MarketShifterGame() {
 		if (phase === "choose-direction") {
 			setPhase("choose-curve");
 			setSelectedCurve(null);
+			isProcessingRef.current = false;
 		}
 	}, [phase]);
 
@@ -220,6 +241,7 @@ export default function MarketShifterGame() {
 		setSelectedCurve(null);
 		setUserAnswer(null);
 		setScore({ correct: 0, total: 0 });
+		isProcessingRef.current = false;
 	}, []);
 
 	const handleKeyPress = useCallback(
