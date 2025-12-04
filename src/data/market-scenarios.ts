@@ -85,7 +85,7 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		concept: "Subsidies / Government Policy",
 		chapter: "Chapter 3: The Market at Work: Supply and Demand",
 		explanation:
-			"Tax credits reduce the effective price consumers pay. This acts like a decrease in price from the buyer's perspective, increasing quantity demanded at every market price—a rightward shift in demand.",
+			"Tax credits reduce the effective price consumers pay. This acts like a decrease in price from the buyer's perspective, increasing quantity demanded at every market price, a rightward shift in demand.",
 	},
 	{
 		id: "covid-remote-work-2020",
@@ -160,7 +160,7 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		concept: "Derived Demand / Complementary Goods",
 		chapter: "Chapter 3: The Market at Work: Supply and Demand",
 		explanation:
-			"As AI software became more valuable, demand for the hardware needed to run it (GPUs) increased. This is derived demand—the demand for GPUs is derived from demand for AI capabilities.",
+			"As AI software became more valuable, demand for the hardware needed to run it (GPUs) increased. This is derived demand, the demand for GPUs is derived from demand for AI capabilities.",
 	},
 	{
 		id: "student-loan-pause-2020",
