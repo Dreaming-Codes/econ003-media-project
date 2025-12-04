@@ -23,7 +23,7 @@ import {
 } from "../data/market-scenarios";
 import SupplyDemandGraph from "./supply-demand-graph";
 
-type GamePhase = "choose-curve" | "choose-direction" | "result";
+type GamePhase = "choose-curve" | "choose-direction" | "result" | "complete";
 type UserAnswer = {
 	curve: CurveType;
 	direction: ShiftDirection;
@@ -160,13 +160,18 @@ export default function MarketShifterGame() {
 	const nextScenario = useCallback(() => {
 		setExitX(300);
 		setTimeout(() => {
-			setCurrentIndex((prev) => (prev + 1) % scenarios.length);
-			setPhase("choose-curve");
-			setSelectedCurve(null);
-			setUserAnswer(null);
+			const nextIndex = currentIndex + 1;
+			if (nextIndex >= scenarios.length) {
+				setPhase("complete");
+			} else {
+				setCurrentIndex(nextIndex);
+				setPhase("choose-curve");
+				setSelectedCurve(null);
+				setUserAnswer(null);
+			}
 			setExitX(0);
 		}, 100);
-	}, [scenarios.length]);
+	}, [currentIndex, scenarios.length]);
 
 	const goBack = useCallback(() => {
 		if (phase === "choose-direction") {
@@ -231,215 +236,264 @@ export default function MarketShifterGame() {
 				</div>
 			</div>
 
-			<div className="flex flex-col lg:flex-row lg:items-start lg:justify-center gap-6 lg:gap-8">
-				<div className="flex flex-col min-h-0 w-full lg:w-[420px]">
-					<div className="relative flex items-center justify-center">
-						{hints && phase !== "result" && (
-							<>
-								<Badge
-									className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 lg:hidden px-3 py-2 font-bold text-white text-xs opacity-60 z-0 border-transparent"
-									style={{ backgroundColor: hints.leftColor }}
-								>
-									← {hints.left}
-								</Badge>
-								<Badge
-									className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 lg:hidden px-3 py-2 font-bold text-white text-xs opacity-60 z-0 border-transparent"
-									style={{ backgroundColor: hints.rightColor }}
-								>
-									{hints.right} →
-								</Badge>
-							</>
-						)}
-
-						<AnimatePresence mode="wait">
-							<motion.div
-								key={`${currentScenario.id}-${phase}`}
-								className="relative w-full bg-white rounded-2xl shadow-2xl overflow-hidden cursor-grab active:cursor-grabbing z-10"
-								drag={phase !== "result" ? "x" : false}
-								dragConstraints={{ left: 0, right: 0 }}
-								dragElastic={0.8}
-								onDragEnd={handleDragEnd}
-								initial={{ scale: 0.95, opacity: 0, x: exitX }}
-								animate={{
-									scale: 1,
-									opacity: 1,
-									x: 0,
-									rotate:
-										swipeDirection === "left"
-											? -5
-											: swipeDirection === "right"
-												? 5
-												: 0,
-								}}
-								exit={{ scale: 0.95, opacity: 0, x: exitX }}
-								transition={{ type: "spring", stiffness: 300, damping: 25 }}
-								whileDrag={{ scale: 1.02 }}
-							>
-								<div className="relative h-36 sm:h-40 bg-gray-900">
-									{currentImageUrl && (
-										<img
-											alt={currentScenario.headline}
-											className="w-full h-full object-cover"
-											src={currentImageUrl}
-										/>
-									)}
-									<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-									<div className="absolute bottom-0 left-0 right-0 p-3">
-										<Badge
-											className="mb-1 text-white border-transparent"
-											style={{ backgroundColor: UCR_BLUE }}
-										>
-											{currentScenario.year}
-										</Badge>
-										<h3 className="text-base font-bold text-white leading-snug">
-											{currentScenario.headline}
-										</h3>
-									</div>
-								</div>
-
-								<div className="p-4 lg:p-5">
-									<p className="text-gray-600 text-sm mb-4 leading-relaxed">
-										{currentScenario.description}
+			{phase === "complete" ? (
+				<div className="flex justify-center">
+					<motion.div
+						className="w-full max-w-md"
+						initial={{ scale: 0.95, opacity: 0 }}
+						animate={{ scale: 1, opacity: 1 }}
+						transition={{ type: "spring", stiffness: 300, damping: 25 }}
+					>
+						<Card className="bg-white rounded-2xl shadow-2xl p-6 border-0">
+							<CardContent className="p-0 space-y-6">
+								<div className="text-center">
+									<CheckCircle2
+										className="mx-auto mb-4 text-green-500"
+										size={64}
+									/>
+									<h2 className="text-2xl font-bold text-gray-800 mb-2">
+										Game Complete!
+									</h2>
+									<p className="text-gray-600">
+										You've finished all {scenarios.length} scenarios
 									</p>
-
-									{phase === "choose-curve" && (
-										<div className="space-y-3">
-											<p className="text-center font-semibold text-gray-800">
-												Which curve does this affect?
-											</p>
-											<p className="text-center text-xs text-gray-500">
-												Swipe or tap to choose
-											</p>
-											<div className="grid grid-cols-2 gap-3">
-												<Button
-													className="p-3 h-auto rounded-xl border-2 border-gray-200 hover:border-blue-400 hover:bg-blue-50 flex flex-col items-center gap-1 bg-transparent"
-													onClick={() => handleCurveSelect("supply")}
-													variant="outline"
-												>
-													<TrendingUp color={UCR_BLUE} size={24} />
-													<span className="font-semibold text-gray-800 text-sm">
-														Supply
-													</span>
-												</Button>
-												<Button
-													className="p-3 h-auto rounded-xl border-2 border-gray-200 hover:border-amber-400 hover:bg-amber-50 flex flex-col items-center gap-1 bg-transparent"
-													onClick={() => handleCurveSelect("demand")}
-													variant="outline"
-												>
-													<TrendingDown color={UCR_GOLD} size={24} />
-													<span className="font-semibold text-gray-800 text-sm">
-														Demand
-													</span>
-												</Button>
-											</div>
-										</div>
-									)}
-
-									{phase === "choose-direction" && (
-										<div className="space-y-3">
-											<div className="flex items-center justify-center gap-2">
-												<Button
-													className="p-1 hover:bg-gray-100"
-													onClick={goBack}
-													size="icon-sm"
-													variant="ghost"
-												>
-													<Undo2 className="text-gray-400" size={16} />
-												</Button>
-												<Badge
-													className="text-white border-transparent"
-													style={{
-														backgroundColor:
-															selectedCurve === "supply" ? UCR_BLUE : UCR_GOLD,
-													}}
-												>
-													{selectedCurve === "supply" ? "Supply" : "Demand"}
-												</Badge>
-											</div>
-											<p className="text-center font-semibold text-gray-800">
-												Which direction does it shift?
-											</p>
-											<div className="grid grid-cols-2 gap-3">
-												<Button
-													className="p-3 h-auto rounded-xl border-2 border-gray-200 hover:border-red-400 hover:bg-red-50 flex flex-col items-center gap-1 bg-transparent"
-													onClick={() => handleDirectionSelect("left")}
-													variant="outline"
-												>
-													<ArrowLeft className="text-red-500" size={24} />
-													<span className="font-semibold text-gray-800 text-sm">
-														Shift Left
-													</span>
-													<span className="text-xs text-gray-500">
-														Decrease
-													</span>
-												</Button>
-												<Button
-													className="p-3 h-auto rounded-xl border-2 border-gray-200 hover:border-green-400 hover:bg-green-50 flex flex-col items-center gap-1 bg-transparent"
-													onClick={() => handleDirectionSelect("right")}
-													variant="outline"
-												>
-													<ArrowRight className="text-green-500" size={24} />
-													<span className="font-semibold text-gray-800 text-sm">
-														Shift Right
-													</span>
-													<span className="text-xs text-gray-500">
-														Increase
-													</span>
-												</Button>
-											</div>
-										</div>
-									)}
-
-									{phase === "result" && (
-										<ResultContent
-											isCorrect={isCorrect ?? false}
-											scenario={currentScenario}
-											userAnswer={userAnswer}
-											onNext={nextScenario}
-										/>
-									)}
 								</div>
-							</motion.div>
-						</AnimatePresence>
+
+								<div className="text-center p-4 rounded-xl bg-gray-50">
+									<p className="text-sm text-gray-500 mb-1">Final Score</p>
+									<p className="text-4xl font-bold" style={{ color: UCR_BLUE }}>
+										{score.correct} / {score.total}
+									</p>
+									<p className="text-sm text-gray-500 mt-1">
+										{Math.round((score.correct / score.total) * 100)}% correct
+									</p>
+								</div>
+
+								<Button
+									className="w-full py-3 h-auto rounded-xl font-semibold text-white hover:opacity-90"
+									onClick={resetGame}
+									style={{ backgroundColor: UCR_BLUE }}
+								>
+									<RotateCcw className="mr-2" size={18} />
+									Play Again
+								</Button>
+							</CardContent>
+						</Card>
+					</motion.div>
+				</div>
+			) : (
+				<div className="flex flex-col lg:flex-row lg:items-start lg:justify-center gap-6 lg:gap-8">
+					<div className="flex flex-col min-h-0 w-full lg:w-[420px]">
+						<div className="relative flex items-center justify-center">
+							{hints && phase !== "result" && (
+								<>
+									<Badge
+										className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-2 lg:hidden px-3 py-2 font-bold text-white text-xs opacity-60 z-0 border-transparent"
+										style={{ backgroundColor: hints.leftColor }}
+									>
+										← {hints.left}
+									</Badge>
+									<Badge
+										className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-2 lg:hidden px-3 py-2 font-bold text-white text-xs opacity-60 z-0 border-transparent"
+										style={{ backgroundColor: hints.rightColor }}
+									>
+										{hints.right} →
+									</Badge>
+								</>
+							)}
+
+							<AnimatePresence mode="wait">
+								<motion.div
+									key={`${currentScenario.id}-${phase}`}
+									className="relative w-full bg-white rounded-2xl shadow-2xl overflow-hidden cursor-grab active:cursor-grabbing z-10"
+									drag={phase !== "result" ? "x" : false}
+									dragConstraints={{ left: 0, right: 0 }}
+									dragElastic={0.8}
+									onDragEnd={handleDragEnd}
+									initial={{ scale: 0.95, opacity: 0, x: exitX }}
+									animate={{
+										scale: 1,
+										opacity: 1,
+										x: 0,
+										rotate:
+											swipeDirection === "left"
+												? -5
+												: swipeDirection === "right"
+													? 5
+													: 0,
+									}}
+									exit={{ scale: 0.95, opacity: 0, x: exitX }}
+									transition={{ type: "spring", stiffness: 300, damping: 25 }}
+									whileDrag={{ scale: 1.02 }}
+								>
+									<div className="relative h-36 sm:h-40 bg-gray-900">
+										{currentImageUrl && (
+											<img
+												alt={currentScenario.headline}
+												className="w-full h-full object-cover"
+												src={currentImageUrl}
+											/>
+										)}
+										<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+										<div className="absolute bottom-0 left-0 right-0 p-3">
+											<Badge
+												className="mb-1 text-white border-transparent"
+												style={{ backgroundColor: UCR_BLUE }}
+											>
+												{currentScenario.year}
+											</Badge>
+											<h3 className="text-base font-bold text-white leading-snug">
+												{currentScenario.headline}
+											</h3>
+										</div>
+									</div>
+
+									<div className="p-4 lg:p-5">
+										<p className="text-gray-600 text-sm mb-4 leading-relaxed">
+											{currentScenario.description}
+										</p>
+
+										{phase === "choose-curve" && (
+											<div className="space-y-3">
+												<p className="text-center font-semibold text-gray-800">
+													Which curve does this affect?
+												</p>
+												<p className="text-center text-xs text-gray-500">
+													Swipe or tap to choose
+												</p>
+												<div className="grid grid-cols-2 gap-3">
+													<Button
+														className="p-3 h-auto rounded-xl border-2 border-gray-200 hover:border-blue-400 hover:bg-blue-50 flex flex-col items-center gap-1 bg-transparent"
+														onClick={() => handleCurveSelect("supply")}
+														variant="outline"
+													>
+														<TrendingUp color={UCR_BLUE} size={24} />
+														<span className="font-semibold text-gray-800 text-sm">
+															Supply
+														</span>
+													</Button>
+													<Button
+														className="p-3 h-auto rounded-xl border-2 border-gray-200 hover:border-amber-400 hover:bg-amber-50 flex flex-col items-center gap-1 bg-transparent"
+														onClick={() => handleCurveSelect("demand")}
+														variant="outline"
+													>
+														<TrendingDown color={UCR_GOLD} size={24} />
+														<span className="font-semibold text-gray-800 text-sm">
+															Demand
+														</span>
+													</Button>
+												</div>
+											</div>
+										)}
+
+										{phase === "choose-direction" && (
+											<div className="space-y-3">
+												<div className="flex items-center justify-center gap-2">
+													<Button
+														className="p-1 hover:bg-gray-100"
+														onClick={goBack}
+														size="icon-sm"
+														variant="ghost"
+													>
+														<Undo2 className="text-gray-400" size={16} />
+													</Button>
+													<Badge
+														className="text-white border-transparent"
+														style={{
+															backgroundColor:
+																selectedCurve === "supply"
+																	? UCR_BLUE
+																	: UCR_GOLD,
+														}}
+													>
+														{selectedCurve === "supply" ? "Supply" : "Demand"}
+													</Badge>
+												</div>
+												<p className="text-center font-semibold text-gray-800">
+													Which direction does it shift?
+												</p>
+												<div className="grid grid-cols-2 gap-3">
+													<Button
+														className="p-3 h-auto rounded-xl border-2 border-gray-200 hover:border-red-400 hover:bg-red-50 flex flex-col items-center gap-1 bg-transparent"
+														onClick={() => handleDirectionSelect("left")}
+														variant="outline"
+													>
+														<ArrowLeft className="text-red-500" size={24} />
+														<span className="font-semibold text-gray-800 text-sm">
+															Shift Left
+														</span>
+														<span className="text-xs text-gray-500">
+															Decrease
+														</span>
+													</Button>
+													<Button
+														className="p-3 h-auto rounded-xl border-2 border-gray-200 hover:border-green-400 hover:bg-green-50 flex flex-col items-center gap-1 bg-transparent"
+														onClick={() => handleDirectionSelect("right")}
+														variant="outline"
+													>
+														<ArrowRight className="text-green-500" size={24} />
+														<span className="font-semibold text-gray-800 text-sm">
+															Shift Right
+														</span>
+														<span className="text-xs text-gray-500">
+															Increase
+														</span>
+													</Button>
+												</div>
+											</div>
+										)}
+
+										{phase === "result" && (
+											<ResultContent
+												isCorrect={isCorrect ?? false}
+												scenario={currentScenario}
+												userAnswer={userAnswer}
+												onNext={nextScenario}
+											/>
+										)}
+									</div>
+								</motion.div>
+							</AnimatePresence>
+						</div>
+					</div>
+
+					<div className="w-full lg:w-[420px] flex-shrink-0">
+						<Card className="bg-white rounded-2xl shadow-xl p-4 border-0">
+							<CardContent className="p-0">
+								<h4 className="text-sm font-semibold text-gray-800 mb-2 text-center">
+									Supply & Demand Graph
+								</h4>
+								<SupplyDemandGraph
+									isCorrect={isCorrect}
+									shiftCurve={
+										phase === "result"
+											? (userAnswer?.curve ?? null)
+											: selectedCurve
+									}
+									shiftDirection={
+										phase === "result" ? (userAnswer?.direction ?? null) : null
+									}
+									showShift={phase === "result"}
+									previewCurve={
+										phase === "choose-direction" ? selectedCurve : null
+									}
+								/>
+								{phase !== "result" && selectedCurve && (
+									<p className="text-center text-xs text-gray-500 mt-2">
+										{selectedCurve === "supply" ? "Blue" : "Gold"} curve will
+										shift
+									</p>
+								)}
+								{phase === "result" && (
+									<p className="text-center text-xs text-gray-500 mt-2">
+										{isCorrect ? "Correct shift shown" : "Correct answer shown"}
+									</p>
+								)}
+							</CardContent>
+						</Card>
 					</div>
 				</div>
-
-				<div className="w-full lg:w-[420px] flex-shrink-0">
-					<Card className="bg-white rounded-2xl shadow-xl p-4 border-0">
-						<CardContent className="p-0">
-							<h4 className="text-sm font-semibold text-gray-800 mb-2 text-center">
-								Supply & Demand Graph
-							</h4>
-							<SupplyDemandGraph
-								isCorrect={isCorrect}
-								shiftCurve={
-									phase === "result"
-										? (userAnswer?.curve ?? null)
-										: selectedCurve
-								}
-								shiftDirection={
-									phase === "result" ? (userAnswer?.direction ?? null) : null
-								}
-								showShift={phase === "result"}
-								previewCurve={
-									phase === "choose-direction" ? selectedCurve : null
-								}
-							/>
-							{phase !== "result" && selectedCurve && (
-								<p className="text-center text-xs text-gray-500 mt-2">
-									{selectedCurve === "supply" ? "Blue" : "Gold"} curve will
-									shift
-								</p>
-							)}
-							{phase === "result" && (
-								<p className="text-center text-xs text-gray-500 mt-2">
-									{isCorrect ? "Correct shift shown" : "Correct answer shown"}
-								</p>
-							)}
-						</CardContent>
-					</Card>
-				</div>
-			</div>
+			)}
 		</div>
 	);
 }
