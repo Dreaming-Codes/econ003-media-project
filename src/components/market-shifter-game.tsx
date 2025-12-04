@@ -567,7 +567,7 @@ function ResultContent({
 							<p className="font-semibold text-gray-900 text-sm">
 								{scenario.concept}
 							</p>
-							<p className="text-xs text-gray-600 mt-1 line-clamp-2">
+							<p className="text-xs text-gray-600 mt-1">
 								{scenario.explanation}
 							</p>
 							<p className="text-xs text-gray-400 mt-1 italic">
