@@ -203,6 +203,47 @@ export default function MarketShifterGame() {
 		setScore({ correct: 0, total: 0 });
 	}, []);
 
+	const handleKeyPress = useCallback(
+		(direction: "left" | "right") => {
+			if (phase === "complete") return;
+
+			if (phase === "result") {
+				// In result phase, any arrow key goes to next scenario
+				setSwipeDirection(direction);
+				setExitX(direction === "right" ? 300 : -300);
+				setTimeout(() => {
+					nextScenario();
+					setSwipeDirection(null);
+				}, 200);
+				return;
+			}
+
+			// In other phases, trigger the swipe action
+			setSwipeDirection(direction);
+			setExitX(direction === "right" ? 300 : -300);
+			setTimeout(() => {
+				handleSwipe(direction);
+				setSwipeDirection(null);
+			}, 200);
+		},
+		[phase, handleSwipe, nextScenario],
+	);
+
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (event.key === "ArrowLeft") {
+				event.preventDefault();
+				handleKeyPress("left");
+			} else if (event.key === "ArrowRight") {
+				event.preventDefault();
+				handleKeyPress("right");
+			}
+		};
+
+		window.addEventListener("keydown", handleKeyDown);
+		return () => window.removeEventListener("keydown", handleKeyDown);
+	}, [handleKeyPress]);
+
 	const getSwipeHints = () => {
 		if (phase === "choose-curve") {
 			return {
