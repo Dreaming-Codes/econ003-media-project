@@ -8,6 +8,12 @@ import homeOfficeImg from "@/assets/scenarios/home-office.webp";
 import nvidiaGpuImg from "@/assets/scenarios/nvidia-gpu.webp";
 import oilSanctionsImg from "@/assets/scenarios/oil-sanctions.webp";
 import semiconductorShortageImg from "@/assets/scenarios/semiconductor-shortage.webp";
+import vaccineFactoryImg from "@/assets/scenarios/vaccine-factory.webp";
+import lngTerminalImg from "@/assets/scenarios/lng-terminal.webp";
+import workersFactoryImg from "@/assets/scenarios/workers-factory.webp";
+import emptyAirportImg from "@/assets/scenarios/empty-airport.webp";
+import emptyRestaurantImg from "@/assets/scenarios/empty-restaurant.webp";
+import forSaleSignImg from "@/assets/scenarios/for-sale-sign.webp";
 
 export type CurveType = "supply" | "demand";
 export type ShiftDirection = "left" | "right";
@@ -176,5 +182,95 @@ export const MARKET_SCENARIOS: MarketScenario[] = [
 		chapter: "Chapter 3: The Market at Work: Supply and Demand",
 		explanation:
 			"When borrowers didn't have to make loan payments, they had more disposable income. For normal goods, an increase in income increases demand (shifts right) as consumers can afford more.",
+	},
+	{
+		id: "covid-vaccine-rollout-2021",
+		headline: "2021 COVID Vaccine Rollout Expands Supply",
+		year: "2021",
+		description:
+			"Pharmaceutical companies like Pfizer, Moderna, and AstraZeneca rapidly scaled up vaccine production as new factories opened and manufacturing processes improved.",
+		mediaSource: vaccineFactoryImg,
+		mediaType: "image",
+		correctCurve: "supply",
+		correctShift: "right",
+		concept: "Technology / Productivity",
+		chapter: "Chapter 3: The Market at Work: Supply and Demand",
+		explanation:
+			"Improvements in production technology and capacity allowed firms to make more doses at a lower cost per unit. Higher productivity increases supply at every price, shifting the supply curve to the right.",
+	},
+	{
+		id: "u.s-lng-export-boom-2022",
+		headline: "2022 U.S. LNG Export Boom to Europe",
+		year: "2022",
+		description:
+			"After Russia cut gas supplies to Europe, U.S. producers ramped up liquefied natural gas (LNG) exports, with new terminals and contracts increasing available gas on world markets.",
+		mediaSource: lngTerminalImg,
+		mediaType: "image",
+		correctCurve: "supply",
+		correctShift: "right",
+		concept: "Number of Sellers / Market Entry",
+		chapter: "Chapter 3: The Market at Work: Supply and Demand",
+		explanation:
+			"More U.S. exporters entered or expanded in the European gas market, increasing the total quantity supplied at each price. Entry and expansion of sellers shift the supply curve to the right.",
+	},
+	{
+		id: "u.s-labor-force-rebound-2023",
+		headline: "2023 U.S. Labor Force Rebound",
+		year: "2023",
+		description:
+			"Labor force participation rebounded toward pre‑pandemic levels, with more workers returning to jobs as health risks fell and childcare availability improved.",
+		mediaSource: workersFactoryImg,
+		mediaType: "image",
+		correctCurve: "supply",
+		correctShift: "right",
+		concept: "Resource Availability (Labor)",
+		chapter: "Chapter 3: The Market at Work: Supply and Demand",
+		explanation:
+			"A larger pool of available workers makes it easier and cheaper for firms to produce goods and services. Greater resource availability increases supply at each price, shifting supply to the right.",
+	},
+	{
+		id: "pandemic-air-travel-collapse-2020",
+		headline: "2020 Collapse in Air Travel Demand",
+		year: "2020",
+		description:
+			"Global passenger air traffic fell by more than half as travelers canceled trips due to COVID-19 health concerns and government travel restrictions.",
+		mediaSource: emptyAirportImg,
+		mediaType: "image",
+		correctCurve: "demand",
+		correctShift: "left",
+		concept: "Consumer Preferences / Perceived Risk",
+		chapter: "Chapter 3: The Market at Work: Supply and Demand",
+		explanation:
+			"Fear of infection and lockdown rules made flying less attractive, reducing willingness to travel at any ticket price. Lower willingness to buy at every price shifts the demand curve to the left.",
+	},
+	{
+		id: "remote-work-dining-decline-2020",
+		headline: "2020 Drop in Office‑Area Restaurant Demand",
+		year: "2020",
+		description:
+			"With many employees working from home, downtown and office‑district restaurants saw sharp declines in customers and revenue.",
+		mediaSource: emptyRestaurantImg,
+		mediaType: "image",
+		correctCurve: "demand",
+		correctShift: "left",
+		concept: "Change in Consumer Circumstances",
+		chapter: "Chapter 3: The Market at Work: Supply and Demand",
+		explanation:
+			"Fewer commuters meant fewer people needing lunch and after‑work meals near offices, reducing quantity demanded at every price. This change in daily routines shifted demand left for those restaurants.",
+	},
+	{
+		id: "2022-rate-hikes-housing-2022",
+		headline: "2022 Higher Interest Rates Cool Housing Demand",
+		year: "2022",
+		description:
+			"Rapid interest rate hikes pushed mortgage rates above pre‑pandemic levels, causing home sales to slow and buyer interest to weaken.",
+		mediaSource: forSaleSignImg,
+		mediaType: "image",
+		correctCurve: "demand",
+		correctShift: "left",
+		concept: "Effective Price / Cost of Financing",
+		chapter: "Chapter 3: The Market at Work: Supply and Demand",
+		explanation:
+			"Higher mortgage rates raise the effective cost of buying a house, so fewer buyers are willing or able to purchase at each home price. This reduces demand and shifts the demand curve to the left.",
 	},
 ];

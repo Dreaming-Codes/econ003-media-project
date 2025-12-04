@@ -133,7 +133,7 @@ export default function MarketShifterGame() {
 	}, [phase, score.correct, score.total]);
 
 	useEffect(() => {
-		setScenarios(shuffleArray(MARKET_SCENARIOS));
+		setScenarios(shuffleArray(MARKET_SCENARIOS).slice(0, 10));
 		return () => clearImageCache();
 	}, []);
 
@@ -277,7 +277,7 @@ export default function MarketShifterGame() {
 	}, [phase]);
 
 	const resetGame = useCallback(() => {
-		setScenarios(shuffleArray(MARKET_SCENARIOS));
+		setScenarios(shuffleArray(MARKET_SCENARIOS).slice(0, 10));
 		setCurrentIndex(0);
 		setPhase("choose-curve");
 		setSelectedCurve(null);
