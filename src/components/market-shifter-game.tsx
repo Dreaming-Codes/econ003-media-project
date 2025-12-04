@@ -78,6 +78,7 @@ export default function MarketShifterGame() {
 	);
 	const [exitX, setExitX] = useState(0);
 	const [currentImageUrl, setCurrentImageUrl] = useState<string>("");
+	const [hasKeyboard, setHasKeyboard] = useState(false);
 
 	const currentScenario = scenarios[currentIndex];
 
@@ -94,6 +95,25 @@ export default function MarketShifterGame() {
 		preloadImage(currentSrc).then(setCurrentImageUrl);
 		preloadImage(nextSrc);
 	}, [currentIndex, scenarios]);
+
+	useEffect(() => {
+		// Detect keyboard by checking for keyboard events
+		const handleKeyboardDetect = () => {
+			setHasKeyboard(true);
+			window.removeEventListener("keydown", handleKeyboardDetect);
+		};
+
+		// Also check if device likely has keyboard (non-touch primary input)
+		const hasCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
+		const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+		if (hasFinePointer && !hasCoarsePointer) {
+			setHasKeyboard(true);
+		} else {
+			window.addEventListener("keydown", handleKeyboardDetect);
+		}
+
+		return () => window.removeEventListener("keydown", handleKeyboardDetect);
+	}, []);
 
 	const isCorrect =
 		userAnswer &&
@@ -417,20 +437,30 @@ export default function MarketShifterGame() {
 												</p>
 												<div className="grid grid-cols-2 gap-3">
 													<Button
-														className="p-3 h-auto rounded-xl border-2 border-gray-200 hover:border-blue-400 hover:bg-blue-50 flex flex-col items-center gap-1 bg-transparent"
+														className="p-3 h-auto rounded-xl border-2 border-gray-200 hover:border-blue-400 hover:bg-blue-50 flex flex-col items-center gap-1 bg-transparent relative"
 														onClick={() => handleCurveSelect("supply")}
 														variant="outline"
 													>
+														{hasKeyboard && (
+															<span className="absolute top-1 left-1 text-gray-400">
+																<ArrowLeft size={12} />
+															</span>
+														)}
 														<TrendingUp color={UCR_BLUE} size={24} />
 														<span className="font-semibold text-gray-800 text-sm">
 															Supply
 														</span>
 													</Button>
 													<Button
-														className="p-3 h-auto rounded-xl border-2 border-gray-200 hover:border-amber-400 hover:bg-amber-50 flex flex-col items-center gap-1 bg-transparent"
+														className="p-3 h-auto rounded-xl border-2 border-gray-200 hover:border-amber-400 hover:bg-amber-50 flex flex-col items-center gap-1 bg-transparent relative"
 														onClick={() => handleCurveSelect("demand")}
 														variant="outline"
 													>
+														{hasKeyboard && (
+															<span className="absolute top-1 right-1 text-gray-400">
+																<ArrowRight size={12} />
+															</span>
+														)}
 														<TrendingDown color={UCR_GOLD} size={24} />
 														<span className="font-semibold text-gray-800 text-sm">
 															Demand
@@ -468,10 +498,15 @@ export default function MarketShifterGame() {
 												</p>
 												<div className="grid grid-cols-2 gap-3">
 													<Button
-														className="p-3 h-auto rounded-xl border-2 border-gray-200 hover:border-red-400 hover:bg-red-50 flex flex-col items-center gap-1 bg-transparent"
+														className="p-3 h-auto rounded-xl border-2 border-gray-200 hover:border-red-400 hover:bg-red-50 flex flex-col items-center gap-1 bg-transparent relative"
 														onClick={() => handleDirectionSelect("left")}
 														variant="outline"
 													>
+														{hasKeyboard && (
+															<span className="absolute top-1 left-1 text-gray-400">
+																<ArrowLeft size={12} />
+															</span>
+														)}
 														<ArrowLeft className="text-red-500" size={24} />
 														<span className="font-semibold text-gray-800 text-sm">
 															Shift Left
@@ -481,10 +516,15 @@ export default function MarketShifterGame() {
 														</span>
 													</Button>
 													<Button
-														className="p-3 h-auto rounded-xl border-2 border-gray-200 hover:border-green-400 hover:bg-green-50 flex flex-col items-center gap-1 bg-transparent"
+														className="p-3 h-auto rounded-xl border-2 border-gray-200 hover:border-green-400 hover:bg-green-50 flex flex-col items-center gap-1 bg-transparent relative"
 														onClick={() => handleDirectionSelect("right")}
 														variant="outline"
 													>
+														{hasKeyboard && (
+															<span className="absolute top-1 right-1 text-gray-400">
+																<ArrowRight size={12} />
+															</span>
+														)}
 														<ArrowRight className="text-green-500" size={24} />
 														<span className="font-semibold text-gray-800 text-sm">
 															Shift Right
