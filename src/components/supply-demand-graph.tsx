@@ -36,10 +36,10 @@ export default function SupplyDemandGraph({
 				className="w-full h-auto"
 				preserveAspectRatio="xMidYMid meet"
 				role="img"
-				viewBox="0 0 400 350"
+				viewBox="0 0 400 370"
 			>
 				{/* Background */}
-				<rect fill="white" height="350" rx="8" width="400" x="0" y="0" />
+				<rect fill="white" height="370" rx="8" width="400" x="0" y="0" />
 
 				{/* Grid lines */}
 				<g opacity="0.1" stroke="#374151">
@@ -79,7 +79,7 @@ export default function SupplyDemandGraph({
 					fill="#374151"
 					textAnchor="middle"
 					x="210"
-					y="315"
+					y="340"
 				>
 					Quantity
 				</text>
